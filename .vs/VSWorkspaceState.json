@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MOD_Settings",
+    "\\Release",
+    "\\SampleData"
   ],
-  "SelectedNode": "\\SkylinesPlateau.sln",
+  "SelectedNode": "\\SampleData\\readme.md",
   "PreviewInSolutionExplorer": false
 }
