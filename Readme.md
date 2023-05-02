@@ -38,7 +38,7 @@ MODの開発はC:Sを発売するParadox社が運営するWikiサイト「Cities
 
 ### 4.利用手順
 #### MODの利用手順
-- インポートする3D都市モデル、設定ファイルを事前に所定のフォルダに保存してください。必要なファイルや保存場所については本リポジトリの[マニュアル](Docs/Manuals/Demonstration_environment_construction_manual.pdf)をご確認ください。
+- インポートする3D都市モデル、設定ファイルを事前に所定のフォルダに保存してください。必要なファイルや保存場所については本リポジトリの[マニュアル](Docs/Manuals/CsPLATEAU_manual.pdf)をご確認ください。
 - 必要に応じて、マニュアル内で使用しているMOD、アセットをサブスクライブ、有効化してください。
 
 - Steamワークショップで公開している [SkylinesPLATEAU](https://steamcommunity.com/sharedfiles/filedetails/?id=2879201518) をサブスクライブのうえアセットエディタで有効化し、画面上のボタンから起動して使用してください。
