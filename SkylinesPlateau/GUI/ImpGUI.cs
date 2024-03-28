@@ -16,12 +16,18 @@ namespace SkylinesPlateau
 		// 固定値
 		//----------------------------------------------
 		// ボタン名称
-		private const string BTN_TITLE_MAPCREATE = "地形読込";
-		private const string BTN_TITLE_IMPORT_HW = "高速道路読込";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+		private const string BTN_TITLE_MAPCREATE = "地形、高速道路読込";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//		private const string BTN_TITLE_IMPORT_HW = "高速道路読込";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
 		private const string BTN_TITLE_IMPORT = "地物読込";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 		
 		// ボタンサイズ
-		private const int BTN_SIZE_W = 150;
+		private const int BTN_SIZE_W = 170;
 		private const int BTN_SIZE_H = 30;
 		// ダイアログの各種名称
 		private const string DIALOG_TITLE = "地物読込";
@@ -75,14 +81,20 @@ namespace SkylinesPlateau
 		public UIView uiView;
 		private UITextureAtlas _ingameAtlas;
 		private UIButton _btnImpMapCreate;
-		private UIButton _btnImpHighway;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//		private UIButton _btnImpHighway;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 		private UIButton _btnImpFeatures;
 		private ImpMapPanel _impMapPanel;
-		private ImpHighwayPanel _impHighwayPanel;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//		private ImpHighwayPanel _impHighwayPanel;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 		private ImpFeaturesPanel _impFeaturesPanel;
 
 		private GameObject _objBtnImpMapCreate;
-		private GameObject _objBtnImpHighway;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//		private GameObject _objBtnImpHighway;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 		private GameObject _objBtnImpFeatures;
 
 		private void Start()
@@ -112,7 +124,7 @@ namespace SkylinesPlateau
 			}
 #endif
 // 建物のアセット一覧
-#if true
+#if false
 			//----------------------------------
 			// 使用可能な建物アセットを取得しログ出力
 			//----------------------------------
@@ -154,10 +166,12 @@ namespace SkylinesPlateau
 			}
 #endif
 
-			//----------------------------------
-			// 設定ファイルの読み込み
-			//----------------------------------
-			ImportSettingData.Instance.Load();
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//			//----------------------------------
+//			// 設定ファイルの読み込み
+//			//----------------------------------
+//			ImportSettingData.Instance.Load();
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 
 			//----------------------------------
 			// テクスチャ取得
@@ -210,12 +224,17 @@ namespace SkylinesPlateau
 					if (!eventParam.used)
 					{
 						IniFileData.Instance.Load();
-						ImportSettingData.Instance.Load();
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//						ImportSettingData.Instance.Load();
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 						_impMapPanel.drawDialog();
 						eventParam.Use();
 					}
 				};
 
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+#if false
+/*
 				//----------------------------------------
 				// 高速道路インポートボタン
 				//----------------------------------------
@@ -251,6 +270,9 @@ namespace SkylinesPlateau
 						eventParam.Use();
 					}
 				};
+*/
+#endif
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 			}
 			// ゲームモードの場合
 			else if (ins_mode == ItemClass.Availability.Game)
@@ -286,7 +308,9 @@ namespace SkylinesPlateau
 					if (!eventParam.used)
 					{
 						IniFileData.Instance.Load();
-						ImportSettingData.Instance.Load();
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//						ImportSettingData.Instance.Load();
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 						_impFeaturesPanel.drawDialog();
 						eventParam.Use();
 					}

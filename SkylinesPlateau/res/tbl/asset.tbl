@@ -1,0 +1,938 @@
+# ---------------------------------------------------------------------
+# ■テーブル名
+# 　　asset.tbl
+# 
+# ■説明
+# 　・Cities:Skylines、Steamワークショップ上での名称とテーブルで使用する名称の紐づけを行う。
+# 　・「udx\bldg」配下に配置されている建物のＧＭＬファイルをインポートする際に参照されるテーブル
+# 　・以下の建物判定用テーブルで指定するアセットファイルを定義する
+# 　　（detailedUsage.tbl　orgUsage2.tbl　orgUsage.tbl　usage.tbl　buildingID.tbl）
+# 
+# ■設定値
+# 　1.key（string型）
+# 　　・建物判定用テーブルで指定するKey値
+# 　　・","(半角カンマ)、"#"(半角シャープ)、"/"(半角スラッシュ)は指定不可。
+# 　　
+# 　2.「アセット名」（string型）
+# 　　・Cities:Skylines、Steamワークショップ上でのアセット名を指定する。（基本的には「アセットのID」+"."+「建物名称」+"_Data"の形式）
+# 
+# ■その他
+# 　・先頭#の行はコメントとして扱われます。
+# 　・各項目は半角カンマ区切りで指定します。
+# 　・項目数が２以上の行が有効。項目３以降はスルーされます。
+# ---------------------------------------------------------------------
+# key, アセット名
+#鉾田市用
+鉾田市役所,2863115285.PlateauUC_鉾田市役所_Data
+鉾田市保健センター,2863114995.PlateauUC_鉾田市保健センター_Data
+鉾田市福祉事務所,2863115370.PlateauUC_鉾田市福祉事務所_Data
+鉾田中央公民館,2863114379.PlateauUC_鉾田中央公民館_Data
+鉾田市立図書館,2863115631.PlateauUC_鉾田市立図書館_Data
+鉾田合同庁舎本庁舎,2863114686.PlateauUC_鉾田合同庁舎本庁舎_Data
+鉾田合同庁舎分庁舎,2863114557.PlateauUC_鉾田合同庁舎分庁舎_Data
+#
+#カスタムアセット
+市役所1,1100810441.市役所_Data
+市役所2,1337303718.Hamilton City Hall_Data
+税務署1,1885357290.JP Tax office_Data
+警察署1,1193421607.警察署 (Japanese police station)_Data
+消防署1,2764001481.JP Fire station branch_Data
+消防署2,535433290.日本の現代的消防署(国旗なし)_Data
+駐在所1,2093810677.JP police box A_Data
+駐在所2,2093810677.JP Police Box B_Data
+駐在所3,2093810677.JP Police Box C_Data
+高校1,447188028.HAM Highschool_Data
+高校2,1122832630.R69 Japanese High School_Data
+研究所1,1117532960.R69 Green Office_Data
+小学校1,1801251165.JPES Main_Data
+小学校2,732138642.Japan Style Elementary School 3_Data
+#小学校3,1801251165.JPES Japanese Elementary School_Data
+中学校1,1801251165.JPES Japanese Elementary School_Data
+保育所1,2216857712.Suginoko Nursery 1_Data
+図書館1,2798795930.OCB City Library_Data
+図書館2,406557337.Library_Data
+博物館1,791205615.Altes Museum_Data
+博物館2,1948801414.HexagramMuseum_Data
+集会所1,1718140255.North Vancouver City Hall_Data
+体育館1,1757051951.Reismann Sporthalle_Data
+体育館2,2335020123.JP Service(三菱重工総合体育館A)_Data
+体育館3,2335020123.JP Service(三菱重工総合体育館B)_Data
+野球場1,675111174.T-Ball Park_Data
+野球場2,501347385.College Baseball Stadium_Data
+サッカー場1,500615917.College Soccer Stadium_Data
+サッカー場2,553751002.High School Football Stadium_Data
+病院1,1985299509.Louver Hospital_Data
+診療所1,2596669675.JP_Kimura Clinic 木村医院_Data
+診療所2,2290836346.JP Clinic (small)_Data
+公衆トイレ1,2136682820.Tokachi Toillet A building_Data
+公衆トイレ2,2136682820.Tokachi Toillet B building_Data
+公衆トイレ3,2136682820.Tokachi Toillet C building_Data
+公衆トイレ4,2136682820.Tokachi Toillet D building_Data
+神社1,1942430377.JPCS Community Building 会館_Data
+神社2,1942430377.JPCS Main Shrine Building L 本殿_Data
+神社3,1942430377.JPCS Treasure hall 宝物殿_Data
+教会1,2500893489.JP Muikamachi Church_Data
+#
+#
+############################################
+# 以降、標準アセット
+############################################
+B0,Agricultural 4x4 Processing 01
+B1,Agricultural 4x4 Processing 02
+B2,H1 1x1 FarmingFacility03
+B3,Farming 4x4 Farm
+B4,Farming 4x4 Farm 2
+B5,Farming 4x4 Farm 3
+B6,Agricultural 3x3 Processing 03
+B7,Agricultural 3x3 Processing 04
+B8,agricultural_building_05
+B9,Farming3x2
+B10,Farming2x2
+B11,Agricultural 1x1 processing 1
+B12,Agricultural 2x2 processing 2
+B13,Farming4x4
+B14,Farming4x4_02
+B15,Farming4x4_03
+B16,Agricultural 3x2 processing 2
+B17,Farming2x2cornerleft
+B18,Farming2x2cornerright
+B19,Farming4x4cornerleft
+B20,Farming4x4cornerright
+B21,Water Pipe Junction
+B22,Water Intake
+B23,Water Outlet
+B24,Water Treatment Plant
+B25,Water Tower
+B26,L5 3x3 Villa02
+B27,L2 2x3 Detached01
+B28,L1 4x3 detached04
+B29,L1 3x4 detached04
+B30,L1 1x1 Detached
+B31,L2 1x1 detached01
+B32,L2 3x4 Detached02
+B33,L3 1x1 Detached
+B34,L3 3x4 detached01
+B35,L4 1x1 Villa04
+B36,L4 2x2 Villa02
+B37,L4 2x2 Villa07
+B38,L5 4x3 Villa05
+B39,L5 3x4 Villa05
+B40,L5 3x3 Villa08
+B41,L5 3x2 Villa06
+B42,L5 2x3 Villa07
+B43,L5 2x2 Villa09
+B44,L5 2x2 Villa07
+B45,L5 1x1 DetachedEF
+B46,L4 4x4 Villa08a
+B47,L1 3x3 Detached 1a
+B48,L2 2x2 Detached01
+B49,L2 3x2 Detached01
+B50,L2 3x4 Detached04a
+B51,L1 2x2 Detached01
+B52,L1 2x2 Detached03
+B53,L1 2x2 Detached04
+B54,L1 2x2 Detached06
+B55,L1 2x3 Detached03
+B56,L1 2x3 Detached05
+B57,L1 3x2 Detached04
+B58,L1 3x3 Detached02
+B59,L1 3x4 Detached04a
+B60,L1 3x4 Detached07a
+B61,L1 4x3 Detached05
+B62,L1 4x4 Detached02
+B63,L1 4x4 Detached06a
+B64,L2 2x2 Detached05
+B65,L2 2x3 Detached03
+B66,L2 2x3 Semi-detachedhouse01
+B67,L2 3x3 Detached02
+B68,L2 3x4 Detached02a
+B69,L2 3x4 Semi-detachedhouse02a
+B70,L2 4x3 Detached02
+B71,L2 4x3 Detached02a
+B72,L2 4x4 Detached04
+B73,L3 2x2 Detached04
+B74,L3 2x2 Detached05
+B75,L3 2x3 Detached02
+B76,L3 2x3 Semi-detachedhouse02
+B77,L3 3x2 Detached03
+B78,L3 3x2 Detached06
+B79,L3 3x3 Semi-detachedhouse02
+B80,L3 3x4 Detached03
+B81,L3 3x4 Semi-detachedhouse03a
+B82,L3 4x3 Detached01
+B83,L3 4x3 Detached04a
+B84,L3 4x4 Detached07
+B85,L3 4x4 Semi-detachedhouse03a
+B86,L4 2x3 Villa04
+B87,L4 3x2 Villa02
+B88,L4 3x2 Villa02b
+B89,L4 3x2 Villa04
+B90,L4 3x3 Villa05
+B91,L4 3x4 Villa01
+B92,L4 4x3 Villa01
+B93,L4 4x4 Villa06a
+B94,L5 1x1 Detached
+B95,L5 3x3 Villa01
+B96,L5 4x2 Villa04
+B97,L5 4x3 Villa07
+B98,L5 4x4 Villa03
+B99,L5 4x4 Villa08a
+B100,ChirpX Launch Control Center
+B101,ChirpX Launch Tower
+B102,ChirpX Empty Area 01
+B103,ChirpX Empty Area 02
+B104,ChirpX Empty Area 03
+B105,ChirpX Empty Area 04
+B106,ChirpX Empty Area 05
+B107,ChirpX Empty Area 06
+B108,ChirpX Empty Area 07
+B109,ChirpX Empty Area 08
+B110,ChirpX Empty Area 09
+B111,ChirpX Vehicle Assembly Building
+B112,ChirpX Vehicles Parking
+B113,H1 1x1 Tenement
+B114,H5 3x3 Tenement03
+B115,H5 2x3 Tenement06
+B116,H5 3x3 Tenement05
+B117,H5 3x2 Highrise06
+B118,H4 4x3 Tenement07
+B119,H2 3x3 Tenement01
+B120,H1 4x3 Tenement07
+B121,H3 4x3 Tenement08
+B122,H4 4x4 Tenement07b
+B123,H1 3x3 Tenement08
+B124,H1 3x2 Tenement01
+B125,H1 3x4 Tenement07
+B126,H3 2x2 Tenement04
+B127,H2 1x1 Tenement01
+B128,H2 3x4 Tenement06
+B129,H4 2x2 Tenement09
+B130,H4 1x1 Tenement06
+B131,H5 2x2 tenement03
+B132,H3 1x1 Tenement05
+B133,H1 4x4 Tenement03
+B134,H5 3x2 Tenement06
+B135,H1 2x2 Tenement05
+B136,H1 2x3 Tenement02
+B137,H1 3x2 Tenement04
+B138,H1 3x3 Tenement03
+B139,H5 3x4 Highrise05
+B140,H5 3x4 Tenement09
+B141,H5 3x2 Tenement02
+B142,H5 4x3 Highrise03
+B143,H5 4x3 Highrise04
+B144,H5 4x3 Tenement04
+B145,H5 4x4 Highrise07
+B146,H5 4x4 Highrise08
+B147,H1 3x4 Tenement03a
+B148,H1 4x3 Tenement02
+B149,H1 4x3 Tenement05
+B150,H1 4x4 Tenement04a
+B151,H4 4x3 tenement08a
+B152,H2 2x2 tenement06
+B153,H2 2x3 Tenement01 
+B154,H2 3x2 Tenement05
+B155,H2 3x3 Tenement06
+B156,H2 3x4 Tenement01 1a
+B157,H2 4x3 Tenement06
+B158,H2 4x3 Tenement06a
+B159,H2 4x4 Tenement02a
+B160,H2 4x4 Tenement05b
+B161,H2 4x4 Tenement07a
+B162,H3 2x3 tenement02
+B163,H3 3x3 Tenement04
+B164,H3 3x4 tenement03a
+B165,H3 3x4 Tenement08
+B166,H3 4x3 Tenement04a
+B167,H3 4x4 Tenement05a
+B168,H3 4x4 Tenement08b
+B169,H4 2x3 tenement04
+B170,H4 3x2 tenement07
+B171,H4 3x3 Tenement08
+B172,H4 3x4 tenement05a
+B173,H4 3x4 Tenement07b
+B174,H4 4x4 Tenement09a
+B175,H5 1x1 highrise_hiden_hightech01
+B176,H5 4x3 Highrise01
+B177,H5 4x3 Highrise07a
+B178,H5 4x4 Highrise02
+B179,H5 4x4 Tenement01
+B180,H3 3x2 Tenement04a
+B181,Ore 4x3 Processing
+B182,Ore 4x3 Processing02
+B183,Ore 3x2 Processing
+B184,Ore 3x3 Processing
+B185,Ore 4x4 Extractor
+B186,Ore 2x2 Extractor
+B187,Ore1x1
+B188,Ore 1x1 processing
+B189,Ore 2x2 Processing
+B190,OreCrusher
+B191,H2 3x3 Office06
+B192,H2 3x3 Office08
+B193,H1 2x3 Office01
+B194,H1 2x3 Office07
+B195,H1 3x3 Office04
+B196,H1 4x3 Office06
+B197,H2 1x1 Office01
+B198,H2 2x2 Office04
+B199,H2 2x2 Office07
+B200,H2 4x4 Office06
+B201,H2 4x3 Office09
+B202,H2 4x3 Office06
+B203,H3 3x2 Office01
+B204,H3 3x4 Office08
+B205,H3 4x4 Office12
+B206,H3 4x4 Office07
+B207,H3 4x4 Office05
+B208,H3 4x4 Office02
+B209,H3 4x4 Office01
+B210,H3 4x3 Office06
+B211,H3 4x3 Office04
+B212,H3 4x3 Office03
+B213,H3 3x3 Office10
+B214,H1 3x4 Office01
+B215,H1 4x4 Office06
+B216,H2 2x2 Office08
+B217,H2 2x3 Office04
+B218,H2 2x3 Office07
+B219,H2 3x2 Office08
+B220,H1 4x4 Office05a
+B221,H1 3x4 Office08a
+B222,H2 3x4 Office05a
+B223,H2 4x3 Office09a
+B224,H1 3x2 Office06
+B225,H1 1x1 Office
+B226,H1 2x2 Office02
+B227,H1 2x2 Office03
+B228,H1 2x2 Office05
+B229,H1 3x4 Office02a
+B230,H1 3x4 Office06
+B231,H3 1x1 Office01
+B232,H3 2x2 Office11
+B233,H3 2x3 Office10
+B234,H3 3x4 Office11a
+B235,H3 4x3 Office02a
+B236,Landfill Site
+B237,Combustion Plant
+B238,MediumBridgePillar
+B239,Road Connection
+B240,HighwayBridgePillar
+B241,HighwayRampPillar
+B242,HighwayBridgeSuspensionPillar
+B243,LargeRoadBridgeSuspensionPillar
+B244,RoadSmallBridgePillar
+B245,Empty Intersection
+B246,Cloverleaf Intersection
+B247,Threeway Intersection
+B248,RoundaboutL
+B249,RoundaboutS
+B250,Road Connection Small
+B251,GravelBridgePillar
+B252,Oneway Toll Booth Large 01
+B253,Oneway Toll Booth Large 01 Sub
+B254,Oneway Toll Booth Medium 01
+B255,Twoway Toll Booth Large 01
+B256,Twoway Toll Booth Large 01 Sub
+B257,Twoway Toll Booth Medium 01
+B258,Twoway Toll Booth Medium 01 Sub
+B259,Police Headquarters
+B260,Police Station
+B261,Empty Park 12x8
+B262,Eden Project
+B263,Wildlife Spawn Point
+B264,Expensive Park
+B265,Expensive Playground
+B266,Expensive Plaza
+B267,Regular Park
+B268,Regular Playground
+B269,Regular Plaza
+B270,Pedestrian Elevated Pillar
+B271,Fishing Island
+B272,Fishing Island Sub
+B273,Floating Cafe
+B274,Floating Cafe Sub
+B275,Tropical Garden
+B276,Wooden Footbridge Pillar 6
+B277,Wooden Footbridge Pillar 12
+B278,Wooden Footbridge Pillar 18
+B279,Wooden Footbridge Pillar 24
+B280,Fire Station
+B281,Fire House
+B282,ExpoCenter
+B283,Oppression Office
+B284,Opera House
+B285,Grand Mall
+B286,SeaAndSky Scraper
+B287,High Interest Tower
+B288,Trash Mall
+B289,Theater of Wonders
+B290,Statue of Shopping
+B291,Posh Mall
+B292,SeaWorld
+B293,Modern Art Museum
+B294,Plaza of the Dead
+B295,Observatory
+B296,ScienceCenter
+B297,Cathedral of Plentitude
+B298,Business Park
+B299,Servicing Services
+B300,Transport Tower
+B301,City Hall
+B302,Court House
+B303,Colossal Offices
+B304,Fountain of LifeDeath
+B305,Friendly Neighborhood
+B306,Lazaret Plaza
+B307,Library
+B308,Official Park
+B309,Stadium
+B310,Statue of Industry
+B311,StatueOfWealth
+B312,Winter Market 01
+B313,Winter Market 01 Tree Sub
+B314,Academic Library 01
+B315,Academic Library 01 A
+B316,Oil 3x3 Processing
+B317,H1 1x1 Facility01
+B318,H1 1x1 Facility02
+B319,Oil 4x4 Processing
+B320,Oil 4x4 Processing02
+B321,Oil 3x2 Processing
+B322,Oil 3x3 Extractor
+B323,Oil2x2
+B324,Oil 1x1 processing
+B325,Oil 2x2 Processing
+B326,Elementary School
+B327,Hadron Collider
+B328,High School
+B329,University
+B330,Library 01
+B331,Electricity Pole
+B332,Nuclear Power Plant
+B333,Wind Turbine
+B334,Solar Power Plant
+B335,Dam Power House
+B336,Dam Node Building
+B337,Advanced Wind Turbine
+B338,Coal Power Plant
+B339,Oil Power Plant
+B340,Fusion Power Plant
+B341,Bus Depot
+B342,Train Station
+B343,Train Connection
+B344,Airport
+B345,Airplane Connection
+B346,Ship Connection
+B347,Harbor
+B348,Cargo Center
+B349,Cargo Harbor
+B350,RailwayBridgePillar
+B351,RailwayElevatedPillar
+B352,Space Elevator
+B353,Metro Entrance
+B354,Airport Apron
+B355,Integrated Metro Station
+B356,RailOnewayBridgePillar
+B357,RailOnewayElevatedPillar
+B358,Overground Metro Bridge Pillar 01
+B359,Overground Metro Elevated Pillar 01
+B360,Overground Metro Station 01
+B361,Overground Metro Station Elevated 01
+B362,ChirpyBirthday Balloon Tours
+B363,Forestry 4x3 Processing
+B364,Forestry 3x3 Extractor
+B365,Forestry 3x3 Forest
+B366,Forestry 4x4 Forest
+B367,Forestry 3x3 Processing
+B368,Forestry 3x3 Processing 2
+B369,Forestry2x2 forest
+B370,Forestry1x1 forest
+B371,Forestry 2x2
+B372,Forestry 1x1
+B373,Forestry 4x4 Forest 1
+B374,L3 1x1 Shop
+B375,L3 2x2 Shop03
+B376,L1 4x3 Shop06a
+B377,L3 4x3 Shop13a
+B378,L1 3x2 Shop05
+B379,L1 1x1 Shop
+B380,L1 1x2 Shop04
+B381,L1 2x2 Shop02
+B382,L1 2x2 Shop03
+B383,L1 2x2 Shop04
+B384,L1 3x2 Shop01
+B385,L1 3x2 Shop03b
+B386,L1 3x3 Shop07
+B387,L1 3x4 Shop05
+B388,L1 4x3 Shop03b 1a
+B389,L1 4x3 Shop06
+B390,L3 3x3 Shop05
+B391,L3 4x4 Shop07a
+B392,L1 4x4 Shop08a
+B393,L2 1x1 Shop08
+B394,L2 1x2 Shop07
+B395,L2 2x2 Shop2
+B396,L2 3x2 Shop09
+B397,L2 3x3 Shop03
+B398,L2 3x4 Shop04
+B399,L2 4x3 Shop05
+B400,L2 4x3 Shop06
+B401,L2 4x3 Shop10a
+B402,L2 4x4 Shop04
+B403,L3 1x2 Shop07
+B404,L3 2x2 Shop11
+B405,L3 3x2 Shop11
+B406,L3 3x2 Shop12
+B407,L3 3x3 Shop06
+B408,L3 3x4 Shop03
+B409,L3 4x3 Shop10
+B410,L1 4x3 Shop02a
+B411,L3 1x1 Shop07
+B412,H2 4x3 Sweatshop01
+B413,H1 4x4 Sweatshop02
+B414,H1 4x4 Mediumfactory02
+B415,H1 4x4 Mediumfactory03
+B416,H3 4x4 Mediumfactory06
+B417,H1 2x2 Sweatshop03
+B418,H1 4x4 Bigfactory01
+B419,H3 4x3 Bigfactory06
+B420,H2 4x4 Bigfactory02
+B421,H1 4x3 Bigfactory05
+B422,H2 4x4 Bigfactory07
+B423,H1 2x2 Sweatshop06
+B424,H1 3x3 Sweatshop07
+B425,H2 3x3 Sweatshop04
+B426,H1 2x2 Sweatshop05
+B427,H2 1x1 Facility03
+B428,H2 1x1 Facility04
+B429,H3 1x1 Facility05
+B430,H3 1x1 Facility06
+B431,H2 4x4 Sweatshop04
+B432,H2 2x2 sweatshop01
+B433,cargoyard
+B434,H1 3x3 Sweatshop04
+B435,H3 2x2 Bigfactory06
+B436,H3 4x4 Bigfactory 04
+B437,H3 3x3 Mediumfactory08
+B438,H3 4x3 Shop03
+B439,H1 1x1 Shop07
+B440,H1 3x4 Shop04
+B441,H1 4x3 Shop01
+B442,H1 4x3 Shop04a
+B443,H2 1x1 Shop
+B444,H2 2x2 Shop01
+B445,H2 2x3 Shop03
+B446,H2 3x2 Shop01
+B447,H2 3x3 Shop02
+B448,H2 3x3 Shop05
+B449,H2 3x4 Shop04a
+B450,H2 3x4 Shop05
+B451,H2 4x3 Shop02a
+B452,H2 4x3 Shop06
+B453,H2 4x4 Shop06
+B454,H3 1x1 Shop10
+B455,H3 1x1 Shop13
+B456,H3 2x2 Shop01
+B457,H3 2x3 Shop04
+B458,H3 3x2 Shop04
+B459,H3 3x3 Shop06
+B460,H3 3x4 Hotel
+B461,H3 4x3 Shop05a
+B462,H3 4x4 Shop04
+B463,H3 4x4 Shop07a
+B464,H3 4x4 Shop11
+B465,H1 4x3 Shop02
+B466,H1  1x1 Shop01
+B467,H1 2x2 Shop01
+B468,H1 2x3 Shop01
+B469,H1 3x2 Shop03
+B470,H1 3x3 Shop01
+B471,H1 3x3 Shop04
+B472,H1 3x4 Shop02a
+B473,H1 4x4 Shop03
+B474,L5 4x3 Villa11
+B475,L4 4x4 Villa12
+B476,L3 4x3 Detached09
+B477,L3 2x2 Detached12
+B478,H1 4x3 Office011
+B479,H1 4x3 Tenement08
+B480,H2 3x4 Office012
+B481,H1 4x3 Shop09
+B482,H3 4x3 Tenement09
+B483,L1 2x3 Shop11
+B484,H4 4x4 Tenement12
+B485,L2 4x3 Detached07
+B486,L1 4x2 Shop12
+B487,L2 1x2 Detached12
+B488,L1 4x4 Detached11
+B489,L1 4x3 Detached12
+B490,H1 1x2 Office13
+B491,L3 4x4 Detached08
+B492,L3 1x1 Detached14
+B493,H5_3x4_Highrise10
+B494,H2 4x4 Office11
+B495,L3 2x2 Shop19
+B496,L2 4x3 Shop13
+B497,H1 3x2 Office15
+B498,H1 4x3 Office12
+B499,L2 3x4 Detached06
+B500,L2 4x4 Detached08
+B501,L3 2x3 Detached11
+B502,L3_3x4_Detached_10
+B503,H2 4x4 Office10c
+B504,H3 2x2 Office16
+B505,H5_4x3_Highrise_09
+B506,H1 3x4 Shop10
+B507,L2 3x4 Shop14
+B508,L2 4x3 Shop12
+B509,H2 3x2 Office13
+B510,L1 2x2 Detached10
+B511,L1 3x4 Detached08
+B512,L2 3x3 Detached10
+B513,Forestry 4x3 Extractor03
+B514,Forestry 4x3 Processing03
+B515,H2 4x4 Shop11_c
+B516,H3 3x3 Office15
+B517,L5_4x3_Villa13
+B518,H3 4x4 Office17_c
+B519,H3 4x3 Shop13
+B520,L3 3x4 Shop16
+B521,H4 3x4 Tenement11
+B522,Ore 4x3 Processing03
+B523,Oil 3x2 Extractor02
+B524,H2 4x3 BigFactory08
+B525,H2 4x3 Shop07
+B526,H3 3x4 Office14
+B527,H3 4x3 Shop12
+B528,L1_3x2_Shop_10
+B529,L1 3x3 Shop15
+B530,L1_4x2_Shop_09
+B531,L1 2x3 Detached09
+B532,L1_1x1_detached_13
+B533,L1 3x3 Detached14
+B534,L2_2x2_Detached_09
+B535,L4 2x3 Villa08
+B536,L4 4x3 Villa11
+B537,H1 4x3 BigFactory06
+B538,H3 4x4 Mediumfactory07
+B539,H2 4x4 BigFactory03
+B540,L5 3x4 Villa10
+B541,L3 3x3 Detached13
+B542,H2 4x3 Shop08
+B543,L1 3x3 Shop16
+B544,L2 2x3 Shop15
+B545,L2 4x3 Shop 11
+B546,L3 4x3 Shop14
+B547,L3 4x3 Shop15
+B548,H3 3x4 Shop14_c
+B549,H2 4x4 Shop15_c
+B550,H2 4x3 Tenement08
+B551,H1 4x3 Shop08
+B552,H1_4x4_shop11_c
+B553,L1 4x3 Shop13
+B554,L2 3x3 Shop16
+B555,L3 3x2 Shop18
+B556,H2 4x4 Tenement09
+B557,H3 3x4 Tenement10
+B558,L2 4x3 Detached11
+B559,H4 4x3 Tenement10
+B560,Oil 4x2 Processing03
+B561,H1 3x4 Office14
+B562,H1 3x4 Shop12_c
+B563,H1 3x4 Shop09_c
+B564,H3 3x4 Shop16_c
+B565,H3 4x4 Shop17_c
+B566,H1 4x3 Office09
+B567,H1 4x4 Office10_c
+B568,H3 3x4 Office13
+B569,Agricultural 4x3 Processing07
+B570,Agricultural 4x4 Processing06
+B571,H3 4x4 Mediumfactory08
+B572,H3 3x3 Shop17
+B573,H3 4x4 BigFactory05
+B574,H3 4x3 BigFactory07
+B575,H1 4x4 Shop12_c 1
+B576,H2 3x4 Shop09_c
+B577,H2 3x4 Shop14_c
+B578,H3 4x4 Shop15_c 1
+B579,Abandoned Building 01
+B580,Abandoned Factory 01
+B581,Boulder 01
+B582,Boulder 02
+B583,Boulder 03
+B584,Boulder 04
+B585,Bunker Ruins 01
+B586,Rock Area 01
+B587,Rock Formation 01
+B588,Rock Formation 02
+B589,Rock Formation 03
+B590,Rock Formation 04
+B591,Abandoned Lighthouse 01
+B592,Ancient Cemetery 01
+B593,Pier Ruins 01
+B594,Rock Area 02
+B595,Rock Area 03
+B596,Rock Area 04
+B597,Castle Ruins 01
+B598,Ship Wreck 01
+B599,Castle Ruins 03
+B600,Bunker Ruins 02
+B601,Castle Ruins 02
+B602,Cave 01
+B603,Cave 02
+B604,Cave 03
+B605,Cliff 01
+B606,Cliff 02
+B607,Cliff 03
+B608,Cliff 04
+B609,Cliff 05
+B610,Cliff 06
+B611,Cliff 07
+B612,Cliff 08
+B613,Cliff 09
+B614,Cliff 10
+B615,Cliff 11
+B616,Cliff 12
+B617,Rock Formation 01 B
+B618,Rock Formation 01 C
+B619,Rock Formation 02 B
+B620,Rock Formation 02 C
+B621,Rock Formation 03 B
+B622,Rock Formation 03 C
+B623,Rock Formation 04 B
+B624,Rock Formation 04 C
+B625,Medical Clinic
+B626,Hospital
+B627,Medical Center
+B628,Crematory
+B629,Cemetery
+B630,Eldercare 01
+B631,Child Health Center 01
+B632,ParadoxPlaza
+B633,MerryGoRound
+B634,bouncer_castle
+B635,Basketball Court
+B636,Botanical garden
+B637,dog-park-fence
+B638,JapaneseGarden
+B639,Large Trainstation
+B640,Multiplatform Train Station Platforms
+B641,Blimp Depot
+B642,Blimp Stop
+B643,Ferry Bus Hub
+B644,Ferry Harbor
+B645,Ferry Pier
+B646,Ferry Depot
+B647,End of the line Trainstation
+B648,Multiplatform End Station Platform 1
+B649,Multiplatform End Station Platform 2
+B650,Boat Museum
+B651,Two Lane Highway Bridge Pillar
+B652,Two Lane Highway Suspension Pillar
+B653,Four Lane Highway Bridge Pillar
+B654,Four Lane Highway Suspension Pillar
+B655,Cable Car Station End
+B656,Cable Car Stop
+B657,Traffic Park
+B658,Steam Train
+B659,Cable Car Pylon 12
+B660,Cable Car Pylon 24
+B661,Cable Car Pylon 36
+B662,Monorail Pylon
+B663,Monorail Station Standalone
+B664,Monorail Station Avenue
+B665,Monorail Bus Hub
+B666,Monorail Train Metro Hub
+B667,Cable Car Pylon 48
+B668,Cable Car Pylon 60
+B669,Monorail Pylon 2
+B670,Monorail Pylon 3
+B671,Boat Museum Steam Boat
+#
+############################################
+# 以降、ヨーロッパ風の標準アセット
+############################################
+B672,1x1_Factory_EU01
+B673,2X2_Factory_EU04
+B674,3x3_Factory_EU05
+B675,3x3_Factory_EU06
+B676,3x3_Factory_EU09
+B677,3x3_Factory_EU07
+B678,4x3_Factory_EU08
+B679,4x3_Factory_EU10
+B680,4x4_Factory_EU02
+B681,4x4_Factory_EU03
+B682,medicalclinicEU
+B683,hospital_EU
+B684,Fire_Station_EU
+B685,firehouse_EU
+B686,Elementary_School_EU
+B687,highschool_EU
+B688,University_EU
+B689,Tennis_Court_EU
+B690,amsterdam_palace
+B691,arena
+B692,cathedral_of_cologne
+B693,cinema
+B694,city_hall
+B695,department_store
+B696,gherkin
+B697,government_offices
+B698,hypermarket
+B699,london_eye_anim
+B700,shopping_center
+B701,theatre
+B702,Police Headquarters EU
+B703,police_station_EU
+B704,H1_1x1_Officeblock
+B705,H1_2x2_Officeblock
+B706,H1_2x2_Officeblock_Corner
+B707,H1_2x3_Officeblock_Corner
+B708,H1_2x4_Officeblock
+B709,H1_3x2_Officeblock_Corner
+B710,H1_3x3_Officeblock
+B711,H1_3x3_Officeblock_Corner
+B712,H1_3x4_Officeblock
+B713,H1_4x3_officeblock
+B714,H1_officebuilding02EU_4x4
+B715,H1_officebuilding02EU_4x4b
+B716,H1_officebuilding04EU_4x4
+B717,H2_1x1_Officeblock
+B718,H2_2x2_Officeblock
+B719,H2_2x2_Officeblock_Corner
+B720,H2_2x3_Officeblock_Corner
+B721,H2_2x4_Officeblock
+B722,H2_3x2_Officeblock_Corner
+B723,H2_3x3_Officeblock
+B724,H2_3x3_Officeblock_Corner
+B725,H2_3x4_Officeblock
+B726,H2_4x3_officeblock
+B727,H2_officebuilding02EU_4x4
+B728,H2_officebuilding02EU_4x4b
+B729,H2_officebuilding04EU_4x4
+B730,H3_1x1_Officeblock
+B731,H3_2x2_Officeblock
+B732,H3_2x2_Officeblock_Corner
+B733,H3_2x3_Officeblock_Corner
+B734,H3_2x4_Officeblock
+B735,H3_3x2_Officeblock_Corner
+B736,H3_3x3_Officeblock
+B737,H3_3x3_Officeblock_Corner
+B738,H3_3x4_Officeblock
+B739,H3_4x3_officeblock
+B740,H3_officebuilding02EU_4x4
+B741,H3_officebuilding02EU_4x4b
+B742,H3_officebuilding04EU_4x4
+B743,H1_1x1_CommercialBlockhouse
+B744,H1_2x2_CommercialBlockhouse
+B745,H1_2x2_CommercialBlockhouse_Corner
+B746,H1_2x3_CommercialBlockhouse
+B747,H1_2x3_CommercialBlockhouse_Corner
+B748,H3_1x1_CommercialBlockhouse
+B749,H1_3x2_CommercialBlockhouse
+B750,H1_3x2_CommercialBlockhouse01
+B751,H1_3x2_CommercialBlockhouse_Corner
+B752,H1_3x3_CommercialBlockhouse
+B753,H1_3x3_CommercialBlockhouse_Corner
+B754,H1_3x4_CommercialBlockhouse
+B755,H1_4x3_CommercialBlockhouse
+B756,H1_4x4_CommercialBlockhouse
+B757,H2_1x1_CommercialBlockhouse
+B758,H2_2x2_CommercialBlockhouse
+B759,H2_2x2_CommercialBlockhouse_Corner
+B760,H2_2x3_CommercialBlockhouse
+B761,H2_2x3_CommercialBlockhouse_Corner
+B762,H2_2x4_CommercialBlockhouse
+B763,H2_3x2_CommercialBlockhouse
+B764,H2_3x2_CommercialBlockhouse01
+B765,H2_3x2_CommercialBlockhouse_Corner
+B766,H2_3x3_CommercialBlockhouse
+B767,H2_3x3_CommercialBlockhouse_Corner
+B768,H2_3x4_CommercialBlockhouse
+B769,H2_4x3_CommercialBlockhouse
+B770,H2_4x4_CommercialBlockhouse
+B771,H3_2x2_CommercialBlockhouse
+B772,H3_2x2_CommercialBlockhouse_Corner
+B773,H3_2x3_CommercialBlockhouse
+B774,H3_2x3_CommercialBlockhouse_Corner
+B775,H3_2x4_CommercialBlockhouse
+B776,H3_3x2_CommercialBlockhouse
+B777,H3_3x2_CommercialBlockhouse01
+B778,H3_3x2_CommercialBlockhouse_Corner
+B779,H3_3x3_CommercialBlockhouse
+B780,H3_3x3_CommercialBlockhouse_Corner
+B781,H3_3x4_CommercialBlockhouse
+B782,H3_4x3_CommercialBlockhouse
+B783,H3_4x4_CommercialBlockhouse
+B784,H1_2x4_CommercialBlockhouse
+B785,H1_1x1_Blockhouse
+B786,H1_2x2_Blockhouse_Corner
+B787,H1_2x3_Blockhouse
+B788,H1_2x3_Blockhouse_Corner
+B789,H1_2x4_Blockhouse
+B790,H1_2x2_Blockhouse
+B791,H1_3x2_Blockhouse
+B792,H1_3x2_Blockhouse01
+B793,H1_3x2_Blockhouse_Corner
+B794,H1_3x3_Blockhouse
+B795,H1_3x3_Blockhouse_Corner
+B796,H1_3x4_Blockhouse
+B797,H1_4x3_Blockhouse
+B798,H1_4x4_Blockhouse
+B799,H2_1x1_Blockhouse
+B800,H2_2x2_Blockhouse
+B801,H2_2x2_Blockhouse_Corner
+B802,H2_2x3_Blockhouse
+B803,H2_2x3_Blockhouse_Corner
+B804,H2_2x4_Blockhouse
+B805,H2_3x2_Blockhouse
+B806,H2_3x2_Blockhouse01
+B807,H2_3x2_Blockhouse_Corner
+B808,H2_3x3_Blockhouse
+B809,H2_3x3_Blockhouse_Corner
+B810,H2_3x4_Blockhouse
+B811,H2_4x3_Blockhouse
+B812,H2_4x4_Blockhouse
+B813,H3_1x1_Blockhouse
+B814,H3_2x2_Blockhouse
+B815,H3_2x2_Blockhouse_Corner
+B816,H3_2x3_Blockhouse
+B817,H3_2x3_Blockhouse_Corner
+B818,H3_2x4_Blockhouse
+B819,H3_3x2_Blockhouse
+B820,H3_3x2_Blockhouse01
+B821,H3_3x2_Blockhouse_Corner
+B822,H3_3x3_Blockhouse
+B823,H3_3x3_Blockhouse_Corner
+B824,H3_3x4_Blockhouse
+B825,H3_4x3_Blockhouse
+B826,H3_4x4_Blockhouse
+B827,H4_1x1_Blockhouse
+B828,H4_2x2_Blockhouse
+B829,H4_2x2_Blockhouse_Corner
+B830,H4_2x3_Blockhouse
+B831,H4_2x3_Blockhouse_Corner
+B832,H4_2x4_Blockhouse
+B833,H4_3x2_Blockhouse
+B834,H4_3x2_Blockhouse01
+B835,H4_3x2_Blockhouse_Corner
+B836,H4_3x3_Blockhouse
+B837,H4_3x3_Blockhouse_Corner
+B838,H4_3x4_Blockhouse
+B839,H4_4x3_Blockhouse
+B840,H4_4x4_Blockhouse
+B841,H5_1x1_Blockhouse
+B842,H5_2x2_Blockhouse
+B843,H5_2x2_Blockhouse_Corner
+B844,H5_2x3_Blockhouse
+B845,H5_2x3_Blockhouse_Corner
+B846,H5_2x4_Blockhouse
+B847,H5_3x2_Blockhouse
+B848,H5_3x2_Blockhouse01
+B849,H5_3x2_Blockhouse_Corner
+B850,H5_3x3_Blockhouse
+B851,H5_3x3_Blockhouse_Corner
+B852,H5_3x4_Blockhouse
+B853,H5_4x3_Blockhouse
+B854,H5_4x4_Blockhouse

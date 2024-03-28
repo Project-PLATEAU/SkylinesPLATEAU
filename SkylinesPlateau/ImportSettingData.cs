@@ -6,7 +6,10 @@ namespace SkylinesPlateau
 {
     public class ImportSettingData
     {
-        private const string SETTING_FILE = @"Files/SkylinesPlateau/setting.dat";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//        private const string SETTING_FILE = @"Files/SkylinesPlateau/setting.dat";
+        public const string SETTING_FILE = @"Files/SkylinesPlateau/setting.dat";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
         private static ImportSettingData instance;
         public static ImportSettingData Instance => instance ?? (instance = new ImportSettingData());
 

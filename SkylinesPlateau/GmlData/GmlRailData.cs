@@ -3,6 +3,9 @@
 //
 // ■概要
 //      線路を管理するクラス
+// 
+// ■改版履歴
+//      Ver00.00.01     2020.12.16      G.Arakawa@Cmind     新規作成
 //
 //----------------------------------------------------------------------------
 using ColossalFramework;
@@ -12,6 +15,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+// 2023.09.11 G.Arakawa@cmind [PBFのダウンロード先変更対応] ADD_START
+using UnityEngine.Networking;
+// 2023.09.11 G.Arakawa@cmind [PBFのダウンロード先変更対応] ADD_END
 
 namespace SkylinesPlateau
 {
@@ -1551,6 +1557,8 @@ namespace SkylinesPlateau
             }
         }
 
+// 2023.09.11 G.Arakawa@cmind [PBFのダウンロード先変更対応] UPD_START
+#if false
         /// <summary>
         /// 地理院ベクターファイルをダウンロード
         /// </summary>
@@ -1566,9 +1574,11 @@ namespace SkylinesPlateau
                 return fileName;
             }
 
-//            Logger.Log("ダウンロード開始: " + url);
+            Logger.Log("ダウンロード開始: " + url);
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls |
+                    System.Net.SecurityProtocolType.Tls;
                 System.Net.WebClient wc = new System.Net.WebClient();
                 wc.DownloadFile(url, fileName);
                 wc.Dispose();
@@ -1580,6 +1590,44 @@ namespace SkylinesPlateau
             }
             return fileName;
         }
+#endif
+        /// <summary>
+        /// 地理院ベクターファイルをダウンロード
+        /// </summary>
+        private static string getVectorTile(uint z, uint x, uint y)
+        {
+            var fileName = INPUT_PATH_PBF + "/" + z + "_" + x + "_" + y + ".pbf";
+            var url = "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/" + z + "/" + x + "/" + y + ".pbf";
+
+            // ファイルが存在するか確認
+            if (Directory.Exists(fileName))
+            {
+                // 存在するためダウンロードしない
+                return fileName;
+            }
+
+            Logger.Log("ダウンロード開始: " + url);
+            try
+            {
+                UnityWebRequest www = UnityWebRequest.Get(url);
+                www.Send();
+                while (!www.isDone)
+                {
+                    // ダウンロード中
+                }
+                File.WriteAllBytes(fileName, www.downloadHandler.data);
+                Debug.Log("done.");
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("ダウンロード失敗: " + url);
+                Logger.Log("エラー発生。：" + ex.Message);
+                Logger.Log("エラー発生。：" + ex);
+                return "";
+            }
+            return fileName;
+        }
+// 2023.09.11 G.Arakawa@cmind [PBFのダウンロード先変更対応] UPD_END
 
         /// <summary>
         /// 線路の始終点を比較し、同一の場合には１つのラインとする

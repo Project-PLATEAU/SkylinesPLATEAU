@@ -21,7 +21,9 @@ namespace SkylinesPlateau
         //-------------------------------------
         // 固定値
         //-------------------------------------
-        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
         public const string INPUT_PATH2 = @"/udx/bldg";
 
         //-------------------------------------
@@ -97,6 +99,8 @@ namespace SkylinesPlateau
             // 読み込みデータを保持
             List<GmlBuildingData> dataList = new List<GmlBuildingData>();
 
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+/*
             //-------------------------------------
             // フォルダの存在チェック
             //-------------------------------------
@@ -106,6 +110,17 @@ namespace SkylinesPlateau
                 Logger.Log("フォルダがありません：" + INPUT_PATH);
                 return dataList;
             }
+*/
+            //-------------------------------------
+            // フォルダの存在チェック
+            //-------------------------------------
+            if (!Directory.Exists(IniFileData.Instance.inputFolderPath))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + IniFileData.Instance.inputFolderPath);
+                return dataList;
+            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 
             // TBL読み込み
             BuildingSgTbl sgTbl = new BuildingSgTbl();
@@ -121,7 +136,9 @@ namespace SkylinesPlateau
             Dictionary<string, string> tmpDic = new Dictionary<string, string>();
             // アセットロード
             AssetTbl.Instance.Load();
-
+            
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+/*
             // 指定フォルダの全フォルダを取得する
             DirectoryInfo di = new DirectoryInfo(INPUT_PATH);
             DirectoryInfo[] subFolders = di.GetDirectories();
@@ -133,6 +150,15 @@ namespace SkylinesPlateau
                     Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
                     continue;
                 }
+*/
+            DirectoryInfo dir = new DirectoryInfo(IniFileData.Instance.inputFolderPath);
+            if (!Directory.Exists(dir.FullName + INPUT_PATH2))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
+                return dataList;
+            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 
                 //-------------------------------------
                 // フォルダ内のXMLファイルを取得
@@ -328,7 +354,9 @@ namespace SkylinesPlateau
                         Logger.Log("xmlファイルの解析に失敗しました。：" + ex.Message);
                     }
                 }
-            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 
             Logger.Log("読み込み建物のデータ数：" + dataList.Count);
 

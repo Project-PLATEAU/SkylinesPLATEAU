@@ -24,7 +24,9 @@ namespace SkylinesPlateau
         //-------------------------------------
         // 固定値
         //-------------------------------------
-        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
         public const string INPUT_PATH2 = @"/udx/urf";
 
         //-------------------------------------
@@ -78,7 +80,9 @@ namespace SkylinesPlateau
         {
             // 読み込みデータを保持
             List<GmlZoneData> dataList = new List<GmlZoneData>();
-
+            
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+/*
             //-------------------------------------
             // フォルダの存在チェック
             //-------------------------------------
@@ -103,6 +107,29 @@ namespace SkylinesPlateau
                     Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
                     continue;
                 }
+*/
+
+            //-------------------------------------
+            // フォルダの存在チェック
+            //-------------------------------------
+            if (!Directory.Exists(IniFileData.Instance.inputFolderPath))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + IniFileData.Instance.inputFolderPath);
+                return dataList;
+            }
+
+            // TBL読み込み
+            ZoneSgTbl sgTbl = new ZoneSgTbl();
+
+            DirectoryInfo dir = new DirectoryInfo(IniFileData.Instance.inputFolderPath);
+            if (!Directory.Exists(dir.FullName + INPUT_PATH2))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
+                return dataList;
+            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 
                 //-------------------------------------
                 // フォルダ内のXMLファイルを取得
@@ -134,13 +161,19 @@ namespace SkylinesPlateau
                             // 区画番号を設定
                             if (!sgTbl.dataDic.TryGetValue(gmldata.function, out gmldata.zone))
                             {
-                                if (ImportSettingData.Instance.zoneType == 0)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//                                if (ImportSettingData.Instance.zoneType == 0)
+                                if (IniFileData.Instance.zoneType == 0)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
                                 {
                                     // 区画番号に該当なし
                                     continue;
                                 }
                                 // 「指定がない場合」の設定値がある場合
-                                gmldata.zone = ImportSettingData.Instance.zoneType + 1;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//                                gmldata.zone = ImportSettingData.Instance.zoneType + 1;
+                                gmldata.zone = IniFileData.Instance.zoneType + 1;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
                             }
 
                             // 形状ポリゴン
@@ -248,7 +281,9 @@ namespace SkylinesPlateau
                         Logger.Log("xmlファイルの解析に失敗しました。：" + ex.Message);
                     }
                 }
-            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 
             Logger.Log("読み込み建物のデータ数：" + dataList.Count);
 

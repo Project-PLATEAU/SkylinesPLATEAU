@@ -1,7 +1,13 @@
-﻿using System;
+﻿// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+using ColossalFramework.IO;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+using System.Reflection;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 using System.Text;
 
 namespace SkylinesPlateau
@@ -65,6 +71,10 @@ namespace SkylinesPlateau
         //--------------------------------------------------
         // メンバ変数
         //--------------------------------------------------
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_START
+		// テーブル登録順
+		public ulong dataNo = 0;
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_END
         // key
         public string key = "";
     	// 建物名称
@@ -83,8 +93,14 @@ namespace SkylinesPlateau
         //--------------------------------------------------
         // メソッド
         //--------------------------------------------------
-        public BuildingSgTblData(string key, string nameStr, string typeStr, string height, string area, string asset, string def_asset)
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] UPD_START
+//        public BuildingSgTblData(string key, string nameStr, string typeStr, string height, string area, string asset, string def_asset)
+        public BuildingSgTblData(ulong dataNo, string key, string nameStr, string typeStr, string height, string area, string asset, string def_asset)
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] UPD_END
         {
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_START
+        	this.dataNo = dataNo;
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_END
             this.key = key;
             this.nameStr = nameStr;
             this.typeStr = typeStr;
@@ -94,6 +110,8 @@ namespace SkylinesPlateau
             this.def_asset = def_asset;
         }
 
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] UPD_START
+/*
         // 最も優先度の高い設定値を返却する
         static public BuildingSgTblData getBestSgTblData(List<BuildingSgTblData> list)
         {
@@ -118,8 +136,135 @@ namespace SkylinesPlateau
 
             return null;
         }
-    	
-    	// メンバで設定されている値とマッチするか判定
+*/
+        // 最も優先度の高い設定値を返却する
+        static public BuildingSgTblData getBestSgTblData(List<BuildingSgTblData> list)
+        {
+            if (IniFileData.Instance.logOut)
+            {
+                Logger.Log("優先度の高いアセット判定");
+            }
+
+            //---------------------------------------------
+            // 項目が無い場合
+            //---------------------------------------------
+            if (list == null || list.Count == 0)
+            {
+                if (IniFileData.Instance.logOut)
+                {
+                    Logger.Log("アセットなし");
+                }
+                return null;
+            }
+
+            //---------------------------------------------
+            // 項目が１件しかない場合
+            //---------------------------------------------
+            if (list.Count == 1)
+            {
+                if (IniFileData.Instance.logOut)
+                {
+                    Logger.Log("アセット１件のみ：" + list[0]);
+                }
+                return list[0];
+            }
+
+            //---------------------------------------------
+            // 複数項目が存在する場合 (Key指定ありをチェック)
+            //---------------------------------------------
+            var filterList = list.FindAll(item =>
+            {
+                //---------------------------------------------
+                // 空白データを除外
+                //---------------------------------------------
+                if (item.nameStr == "") return false;
+                return true;
+            });
+            if (filterList.Count == 1)
+            {
+                //---------------------------------------------
+                // 空白データ以外のデータ１件のみ
+                // ⇒確定
+                //---------------------------------------------
+                if (IniFileData.Instance.logOut)
+                {
+                    Logger.Log("[空白除外後] アセット１件のみ：" + filterList[0]);
+                }
+                return filterList[0];
+            }
+            else if (filterList.Count > 1)
+            {
+                //---------------------------------------------
+                // 空白データ以外のデータ１件以上
+                // ⇒テーブル順のトップと同じKeyを、高さ＆面積で判定
+                //---------------------------------------------
+                // テーブル順でソートし、先頭データ取得
+                var firstData = filterList.OrderBy(rec => rec.dataNo).FirstOrDefault();
+                // 先頭データのKey名でフィルタリング
+                filterList = filterList.FindAll(item =>
+                {
+                    if (item.nameStr == firstData.nameStr) return true;
+                    return false;
+                });
+                // 高さ降順、面積降順、テーブル昇順でソート
+                IOrderedEnumerable<BuildingSgTblData> sortList = filterList.OrderByDescending(rec => rec.height).ThenByDescending(rec => rec.area).ThenBy(rec => rec.dataNo);
+
+                if (IniFileData.Instance.logOut)
+                {
+                    Logger.Log("[空白除外後] ソートした先頭：" + sortList.FirstOrDefault());
+                }
+
+                // 先頭データを返却
+                return sortList.FirstOrDefault();
+            }
+
+            //---------------------------------------------
+            // 複数項目が存在する場合 (Key指定なし)
+            //---------------------------------------------
+            filterList = list.FindAll(item =>
+            {
+                //---------------------------------------------
+                // 空白データのみ残す
+                //---------------------------------------------
+                if (item.nameStr != "") return false;
+                return true;
+            });
+            if (filterList.Count == 1)
+            {
+                //---------------------------------------------
+                // 空白データ１件のみ
+                // ⇒確定
+                //---------------------------------------------
+                if (IniFileData.Instance.logOut)
+                {
+                    Logger.Log("[空白を対象] アセット１件のみ：" + filterList[0]);
+                }
+                return filterList[0];
+            }
+            else if (filterList.Count > 1)
+            {
+                //---------------------------------------------
+                // 空白データ１件以上
+                // ⇒高さ＆面積で判定
+                //---------------------------------------------
+                // 高さ降順、面積降順、テーブル昇順でソート
+                IOrderedEnumerable<BuildingSgTblData> sortList = filterList.OrderByDescending(rec => rec.height).ThenByDescending(rec => rec.area).ThenBy(rec => rec.dataNo);
+
+                if (IniFileData.Instance.logOut)
+                {
+                    Logger.Log("[空白を対象] ソートした先頭：" + sortList.FirstOrDefault());
+                }
+
+                // 先頭データを返却
+                return sortList.FirstOrDefault();
+            }
+
+            // ここに来ることはない
+            return null;
+        }
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] UPD_END
+
+        // メンバで設定されている値とマッチするか判定
         public bool checkSgTblData(string key, string nameStr, string typeStr, double height, double area)
         {
             // Key
@@ -351,7 +496,10 @@ namespace SkylinesPlateau
             //------------------------------------------
             // 主要建物を読み込む場合
             //------------------------------------------
-            if (ImportSettingData.Instance.isImpUniqueBuilding)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//            if (ImportSettingData.Instance.isImpUniqueBuilding)
+            if (IniFileData.Instance.isImpUniqueBuilding)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
             {
                 // 【優先度０】buildingID
                 Logger.Log("buildingIDテーブルの検索開始");
@@ -382,7 +530,10 @@ namespace SkylinesPlateau
             //------------------------------------------
             // 一般建物を読み込む場合
             //------------------------------------------
-            if (ImportSettingData.Instance.isImpBuilding)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//            if (ImportSettingData.Instance.isImpBuilding)
+            if (IniFileData.Instance.isImpBuilding)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
             {
                 // 【優先度５】usage
                 // ※ID指定がない場合でも対象とする
@@ -484,6 +635,32 @@ namespace SkylinesPlateau
             List<BuildingSgTblData> rtnDataList = new List<BuildingSgTblData>();
             try
             {
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+                // ファイルが無ければ、リソースからコピーする
+                if (!File.Exists(fileName))
+                {
+                    // フォルダ存在チェック
+                    IniFileData.CreateSystemFolder();
+
+                    Logger.Log("リソースからファイルコピー  : " + fileName);
+                    Assembly executingAssembly = Assembly.GetExecutingAssembly();
+                    using (Stream resourceStream = executingAssembly.GetManifestResourceStream("SkylinesPlateau.res.tbl." + Path.GetFileName(fileName)))
+                    {
+                        if (resourceStream != null)
+                        {
+                            // ファイルをコピー
+                            using (FileStream fileStream2 = new FileStream(fileName, FileMode.Create))
+                            {
+                                Logger.Log("リソースからファイルコピー完了  : " + fileName);
+                                resourceStream.CopyTo(fileStream2);
+                                fileStream2.Close();
+                            }
+                            resourceStream.Close();
+                        }
+                    }
+                }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
+
                 // ファイルが無ければ終了
                 if (!File.Exists(fileName))
                 {
@@ -497,6 +674,9 @@ namespace SkylinesPlateau
                 StreamReader sr = new StreamReader(fileStream);
                 string text = sr.ReadToEnd();
                 string[] splitStr = text.Split('\n');
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_START
+                ulong dataCount = 0;
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_END
                 if (IniFileData.Instance.logOut)
                 {
                     Logger.Log("ファイル読み込み  : " + text);
@@ -514,7 +694,10 @@ namespace SkylinesPlateau
                             {
                                 Logger.Log(line);
                             }
-                            rtnDataList.Add(new BuildingSgTblData(strList[0], strList[1], strList[2], strList[3], strList[4], strList[5], strList[6]));
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_START
+                            dataCount++;
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_END
+                            rtnDataList.Add(new BuildingSgTblData(dataCount, strList[0], strList[1], strList[2], strList[3], strList[4], strList[5], strList[6]));
                         }
                         else
                         {
@@ -548,6 +731,31 @@ namespace SkylinesPlateau
             List<BuildingSgTblData> rtnDataList = new List<BuildingSgTblData>();
             try
             {
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+                // ファイルが無ければ、リソースからコピーする
+                if (!File.Exists(fileName))
+                {
+                    // フォルダ存在チェック
+                    IniFileData.CreateSystemFolder();
+
+                    Logger.Log("リソースからファイルコピー  : " + fileName);
+                    Assembly executingAssembly = Assembly.GetExecutingAssembly();
+                    using (Stream resourceStream = executingAssembly.GetManifestResourceStream("SkylinesPlateau.res.tbl." + Path.GetFileName(fileName)))
+                    {
+                        if (resourceStream != null)
+                        {
+                            // ファイルをコピー
+                            using (FileStream fileStream2 = new FileStream(fileName, FileMode.Create))
+                            {
+                                Logger.Log("リソースからファイルコピー完了  : " + fileName);
+                                resourceStream.CopyTo(fileStream2);
+                                fileStream2.Close();
+                            }
+                            resourceStream.Close();
+                        }
+                    }
+                }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
                 // ファイルが無ければ終了
                 if (!File.Exists(fileName))
                 {
@@ -561,6 +769,9 @@ namespace SkylinesPlateau
                 StreamReader sr = new StreamReader(fileStream);
                 string text = sr.ReadToEnd();
                 string[] splitStr = text.Split('\n');
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_START
+                ulong dataCount = 0;
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_END
                 if (IniFileData.Instance.logOut)
                 {
                     Logger.Log("ファイル読み込み  : " + text);
@@ -578,7 +789,10 @@ namespace SkylinesPlateau
                         string[] strList = line.Trim().Split(',');
                         if (strList.Length >= 6)
                         {
-                            rtnDataList.Add(new BuildingSgTblData("", strList[0], strList[1], strList[2], strList[3], strList[4], strList[5]));
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_START
+                            dataCount++;
+// 2022.11.18 G.Arakawa@cmind [建物TBL検索時、複数ヒットしたら先頭レコードを優先する] ADD_END
+                            rtnDataList.Add(new BuildingSgTblData(dataCount, "", strList[0], strList[1], strList[2], strList[3], strList[4], strList[5]));
                         }
                         else
                         {

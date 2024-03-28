@@ -15,7 +15,9 @@ namespace SkylinesPlateau
 		// 固定値
 		//----------------------------------------------
 		// ダイアログの各種名称
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
 		private const string DIALOG_TITLE = "地物読込";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 		private const string DIALOG_MSG_BTN_OK = "インポート";
 		private const string DIALOG_MSG_BTN_CANSEL = "キャンセル";
 		private const string DIALOG_MSG_IMPTYPE = "インポートする地物を選択";
@@ -30,10 +32,21 @@ namespace SkylinesPlateau
 		private const string DIALOG_MSG_AREA = "読み込み範囲 (Km)";
 		private const string DIALOG_MSG_AREA_HOSOKU = "*1タイルはおよそ2km x 2kmです";
 //		private const string DIALOG_MSG_ZONE = "区画用途が判定できない場合";
-		private const string DIALOG_MSG_SYS = "座標系番号";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//		private const string DIALOG_MSG_SYS = "座標系番号";
+		private const string DIALOG_MSG_SYS = "座標系系番号";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+		private const string DIALOG_MSG_FOLDER = "3D都市モデルフォルダ";
+		private const string DIALOG_MSG_CENTER_HOSOKU = "10進法緯度経度、カンマ区切りで入力";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 		// ダイアログサイズ
-		private const int DIALOG_SIZE_W = 350;
-		private const int DIALOG_SIZE_H = 540;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//		private const int DIALOG_SIZE_W = 350;
+//		private const int DIALOG_SIZE_H = 540;
+		private const int DIALOG_SIZE_W = 500;
+		private const int DIALOG_SIZE_H = 560;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 		// 各項目間のスペース
 		private const int DIALOG_SPACE_H1 = 20;
 		// 同一項目間のスペース
@@ -59,9 +72,11 @@ namespace SkylinesPlateau
 //		private UICheckBox _chkImpArea;
 		private UILabel _lblCenterTitle;
 		private UITextField _txtCenter;
-		private UICheckBox _chkUseAreaSize;
-		private UITextField _txtAreaSize;
-		private UILabel _lblUseAreaMsg;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//		private UICheckBox _chkUseAreaSize;
+//		private UITextField _txtAreaSize;
+//		private UILabel _lblUseAreaMsg;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 //		private UILabel _lblZoneTitle;
 //		private UIDropDown _dropZone;
 		private UIButton _btnOk;
@@ -69,6 +84,12 @@ namespace SkylinesPlateau
 		private UILabel _lblSystemTitle;
 		private UIDropDown _dropSystem;
 		private bool _initialized = false;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+		private UILabel _lblFolderTitle;
+		private UITextField _txtFolder;
+		private UILabel _lblCenterMsg;
+		private UIFolderDialog _folderDialog = null;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 
 		public override void Start()
 		{
@@ -122,6 +143,8 @@ namespace SkylinesPlateau
 				float posX = 20f;
 				float posY = 50f;
 
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+#if false
 				//----------------------------------
 				// 地物選択の項目
 				//----------------------------------
@@ -328,6 +351,11 @@ namespace SkylinesPlateau
 						//----------------------------------
 						// インポート処理
 						//----------------------------------
+// 2022.11.22 G.Arakawa@cmind [平面直角座標系が９系以外、正常に動作していない不具合対応] ADD_START
+						// 座標系の設定
+						CommonBL.Instance.iSystem = ImportSettingData.Instance.isystem + 1;
+// 2022.11.22 G.Arakawa@cmind [平面直角座標系が９系以外、正常に動作していない不具合対応] ADD_END
+
 						MapExtent.Instance.SetMapExtent();
 						int impAllNum = 0;
 						int impNum = 0;
@@ -398,6 +426,256 @@ namespace SkylinesPlateau
 						}
 					}
 				};
+#endif
+				//----------------------------------
+				// 地物選択の項目
+				//----------------------------------
+				// 項目名
+				_lblFitureTitle = UIUtils.CreateLabel(this, "_lblFitureTitle", DIALOG_MSG_IMPTYPE);
+				_lblFitureTitle.width = DIALOG_SIZE_W - 40f;
+				_lblFitureTitle.relativePosition = new Vector3(posX, posY);
+				posX += 20;
+				posY += _lblFitureTitle.height + DIALOG_SPACE_H2;
+				// 道路
+				_chkImpRoad = createCheckBox(posX, posY, "_chkImpRoad", DIALOG_MSG_IMPTYPE_2, IniFileData.Instance.isImpRoad);
+				_chkImpRoad.eventCheckChanged += delegate (UIComponent component, bool value) { IniFileData.Instance.isImpRoad = value; };
+				posY += _chkImpRoad.height + DIALOG_SPACE_H2;
+				// 線路
+				_chkImpRail = createCheckBox(posX, posY, "_chkImpRail", DIALOG_MSG_IMPTYPE_3, IniFileData.Instance.isImpRail);
+				_chkImpRail.eventCheckChanged += delegate (UIComponent component, bool value) { IniFileData.Instance.isImpRail = value; };
+				posY += _chkImpRail.height + DIALOG_SPACE_H2;
+				// 一般建築物
+				_chkImpBuilding = createCheckBox(posX, posY, "_chkImpBuilding", DIALOG_MSG_IMPTYPE_4, IniFileData.Instance.isImpBuilding);
+				_chkImpBuilding.eventCheckChanged += delegate (UIComponent component, bool value) { IniFileData.Instance.isImpBuilding = value; };
+				posY += _chkImpBuilding.height + DIALOG_SPACE_H2;
+				// 特定建築物
+				_chkImpUniqueBuilding = createCheckBox(posX, posY, "_chkImpUniqueBuilding", DIALOG_MSG_IMPTYPE_5, IniFileData.Instance.isImpUniqueBuilding);
+				_chkImpUniqueBuilding.eventCheckChanged += delegate (UIComponent component, bool value) { IniFileData.Instance.isImpUniqueBuilding = value; };
+				posY += _chkImpUniqueBuilding.height + DIALOG_SPACE_H2;
+				// 区域区分
+				_chkImpZone = createCheckBox(posX, posY, "_chkImpZone", DIALOG_MSG_IMPTYPE_6, IniFileData.Instance.isImpZone);
+				_chkImpZone.eventCheckChanged += delegate (UIComponent component, bool value) { IniFileData.Instance.isImpZone = value; };
+				posY += _chkImpZone.height + DIALOG_SPACE_H2;
+				posX -= 20;
+				// 次の項目用に始点位置を調整
+				posY += DIALOG_SPACE_H1;
+				
+				//----------------------------------
+				// 地形：３Ｄ都市モデルの項目
+				//----------------------------------
+				float btn_w = 30f;
+				float btn_h = 22f;
+				// 項目名
+				_lblFolderTitle = UIUtils.CreateLabel(this, "_lblFolderTitle", DIALOG_MSG_FOLDER);
+				_lblFolderTitle.width = DIALOG_SIZE_W - 40f;
+				_lblFolderTitle.relativePosition = new Vector3(posX, posY);
+				posY += _lblFolderTitle.height + DIALOG_SPACE_H2;
+				// テキストフィールド
+				_txtFolder = UIUtils.CreateTextField(this, "_txtFolder", _ingameAtlas, IniFileData.Instance.inputFolderPath);
+				_txtFolder.width = _txtFolder.parent.width - 60f;
+				_txtFolder.relativePosition = new Vector3(posX + 20f, posY);
+				_txtFolder.eventTextSubmitted += delegate (UIComponent component, string value)
+				{
+					IniFileData.Instance.inputFolderPath = value;
+				};
+				_txtFolder.padding.right = (int)Math.Ceiling(btn_w) + 2;
+				// フォルダ参照用ボタン
+				UIButton folderButton = UIUtils.Instance.CreateImageButton(_txtFolder, "FolderIconButton", "folderIcon");
+				folderButton.tooltip = "";
+				folderButton.height = btn_h;
+				folderButton.width = btn_w;
+				folderButton.relativePosition = new Vector3(_txtFolder.width - (btn_w + 5.0f), (_txtFolder.height - btn_h) / 2.0f);
+				folderButton.eventClicked += delegate (UIComponent component, UIMouseEventParameter eventParam)
+				{
+					if (_folderDialog != null)
+					{
+						_folderDialog.Visible = true;
+						if (!_folderDialog.Visible)
+						{
+							_folderDialog = null;
+						}
+					}
+					if (_folderDialog == null)
+					{
+						_folderDialog = new UIFolderDialog();
+						_folderDialog.onOkButtonCallback = () => {
+							IniFileData.Instance.inputFolderPath = _folderDialog.m_FolderPath;
+							_txtFolder.text = _folderDialog.m_FolderPath;
+						};
+						_folderDialog.onCancelButtonCallback = () => {
+						};
+						_folderDialog.m_FolderPath = IniFileData.Instance.inputFolderPath;
+						_folderDialog.drawDialog(this);
+					}
+					else
+					{
+						_folderDialog.m_FolderPath = IniFileData.Instance.inputFolderPath;
+						_folderDialog.Visible = true;
+					}
+				};
+				posY += _txtFolder.height + DIALOG_SPACE_H1;
+
+				//----------------------------------
+				// 中心位置指定の項目
+				//----------------------------------
+				// 項目名
+				_lblCenterTitle = UIUtils.CreateLabel(this, "_lblCenterTitle", DIALOG_MSG_CENTER);
+				_lblCenterTitle.width = DIALOG_SIZE_W - 40f;
+				_lblCenterTitle.relativePosition = new Vector3(posX, posY);
+				posY += _lblCenterTitle.height + DIALOG_SPACE_H2;
+				// テキストフィールド
+				_txtCenter = UIUtils.CreateTextField(this, "_txtCenter", _ingameAtlas, IniFileData.Instance.center);
+				_txtCenter.width = _txtCenter.parent.width - 60f;
+				_txtCenter.relativePosition = new Vector3(posX + 20f, posY);
+				_txtCenter.eventTextSubmitted += delegate (UIComponent component, string value)
+				{
+					IniFileData.Instance.center = value;
+				};
+				posY += _txtCenter.height + DIALOG_SPACE_H2;
+				// 補足メッセージ
+				_lblCenterMsg = UIUtils.CreateLabel(this, "_lblCenterMsg", DIALOG_MSG_CENTER_HOSOKU);
+				_lblCenterMsg.width = DIALOG_SIZE_W - 40f;
+				_lblCenterMsg.relativePosition = new Vector3(posX + 20f, posY);
+				posY += _lblCenterMsg.height + DIALOG_SPACE_H1;
+
+				//----------------------------------
+				// 系番号ドロップダウン
+				//----------------------------------
+				_lblSystemTitle = UIUtils.CreateLabel(this, "_lblSystemTitle", DIALOG_MSG_SYS);
+				_lblSystemTitle.relativePosition = new Vector3(posX, posY);
+				posY += _lblSystemTitle.height + DIALOG_SPACE_H2;
+				_dropSystem = UIUtils.CreateDropDown(this, "_dropSystem", _ingameAtlas);
+				_dropSystem.items = SYS_DROPDOWN;
+				_dropSystem.width = DIALOG_SIZE_W - 60f;
+				_dropSystem.relativePosition = new Vector3(posX + 20f, posY);
+				_dropSystem.selectedIndex = IniFileData.Instance.isystem;
+				_dropSystem.eventSelectedIndexChanged += delegate (UIComponent component, int value)
+				{
+					IniFileData.Instance.isystem = value;
+				};
+				posY += _dropSystem.height + DIALOG_SPACE_H1;
+
+				//----------------------------------
+				// OKボタン
+				//----------------------------------
+				_btnOk = UIUtils.CreateSpriteButton(this, "_btnOk", _ingameAtlas, "ButtonMenu");
+				_btnOk.text = DIALOG_MSG_BTN_OK;
+				_btnOk.height = 30f;
+				_btnOk.width = _btnOk.parent.width / 2f - 20f;
+				_btnOk.relativePosition = new Vector3(10f, posY);
+				_btnOk.eventClicked += delegate (UIComponent component, UIMouseEventParameter eventParam)
+				{
+					if (!eventParam.used)
+					{
+						if (!IniFileData.Instance.isImpRoad &&
+							!IniFileData.Instance.isImpRail &&
+							!IniFileData.Instance.isImpBuilding &&
+							!IniFileData.Instance.isImpUniqueBuilding &&
+							!IniFileData.Instance.isImpZone)
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("入力値が不正", "インポート対象を選択してください。", false);
+							return;
+						}
+						if (IniFileData.Instance.center.Length == 0)
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("入力値が不正", "中心位置を指定してください。", false);
+							return;
+						}
+						if (IniFileData.Instance.inputFolderPath.Length == 0)
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("入力値が不正", "3D都市モデルフォルダを指定してください。", false);
+							return;
+						}
+						if (IniFileData.Instance.isUseAreaSize &&
+							IniFileData.Instance.areaSize.Length == 0)
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("入力値が不正", "読み込み範囲を指定してください。", false);
+							return;
+						}
+						string[] splitStr = IniFileData.Instance.center.Split(',');
+						if (splitStr.Length != 2)
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("入力値が不正", "中心位置は半角カンマ区切りで指定してください。", false);
+							return;
+						}
+
+						//----------------------------------
+						// 設定項目を保存
+						//----------------------------------
+						IniFileData.Instance.Save();
+						SettingsUI.UpdateOptionSetting();
+
+						//----------------------------------
+						// インポート処理
+						//----------------------------------
+// 2022.11.22 G.Arakawa@cmind [平面直角座標系が９系以外、正常に動作していない不具合対応] ADD_START
+						// 座標系の設定
+						CommonBL.Instance.iSystem = IniFileData.Instance.isystem + 1;
+// 2022.11.22 G.Arakawa@cmind [平面直角座標系が９系以外、正常に動作していない不具合対応] ADD_END
+
+						MapExtent.Instance.SetMapExtent();
+						int impAllNum = 0;
+						int impNum = 0;
+						string msg = "";
+						// 通常道路
+						if (IniFileData.Instance.isImpRoad)
+						{
+							impNum = GmlRoadData.Import();
+							msg += ("道路： " + impNum + "件\n");
+							impAllNum += impNum;
+						}
+						// 線路
+						if (IniFileData.Instance.isImpRail)
+						{
+							impNum = GmlRailData.Import();
+							msg += ("線路： " + impNum + "件\n");
+							impAllNum += impNum;
+						}
+						// 一般建築物, 特定建築物
+						if (IniFileData.Instance.isImpBuilding ||
+							IniFileData.Instance.isImpUniqueBuilding)
+						{
+							impNum = GmlBuildingData.Import();
+							msg += ("建物, 区域： " + impNum + "件\n");
+							impAllNum += impNum;
+						}
+						// 区域区分
+						if (IniFileData.Instance.isImpZone)
+						{
+							impNum = GmlZoneData.Import();
+							msg += ("区域区分： " + impNum + "件\n");
+							impAllNum += impNum;
+						}
+
+						//----------------------------------
+						// 画面を閉じる
+						//----------------------------------
+						this.Hide();
+						eventParam.Use();
+						_initialized = false;
+
+						//----------------------------------
+						// ダイアログ表示
+						//----------------------------------
+						if (impAllNum == 0)
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("インポート対象なし", "範囲内にデータはありませんでした。", false);
+						}
+						else
+						{
+							ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+							panel.SetMessage("インポート完了", msg, false);
+						}
+					}
+				};
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
+
 				//----------------------------------
 				// Cancelボタン
 				//----------------------------------
@@ -427,6 +705,8 @@ namespace SkylinesPlateau
 		// 表示状態にする
 		public void drawDialog()
 		{
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+#if false
 			// 表示内容を最新化
 //			_chkImpWaterway.isChecked = ImportSettingData.Instance.isImpWaterway;
 			_chkImpRoad.isChecked = ImportSettingData.Instance.isImpRoad;
@@ -440,6 +720,17 @@ namespace SkylinesPlateau
 			_txtAreaSize.text = ImportSettingData.Instance.areaSize;
 //			_dropZone.selectedIndex = ImportSettingData.Instance.zoneType;
 			_dropSystem.selectedIndex = ImportSettingData.Instance.isystem;
+#endif
+			// 表示内容を最新化
+			_chkImpRoad.isChecked = IniFileData.Instance.isImpRoad;
+			_chkImpRail.isChecked = IniFileData.Instance.isImpRail;
+			_chkImpBuilding.isChecked = IniFileData.Instance.isImpBuilding;
+			_chkImpUniqueBuilding.isChecked = IniFileData.Instance.isImpUniqueBuilding;
+			_chkImpZone.isChecked = IniFileData.Instance.isImpZone;
+			_txtCenter.text = IniFileData.Instance.center;
+			_dropSystem.selectedIndex = IniFileData.Instance.isystem;
+			_txtFolder.text = IniFileData.Instance.inputFolderPath;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 			// 表示状態にｓる
 			this.isVisible = true;
 		}
@@ -451,6 +742,8 @@ namespace SkylinesPlateau
 			{
 				if (!_initialized)
 				{
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+#if false
 //					_chkImpWaterway.isChecked = ImportSettingData.Instance.isImpWaterway;
 					_chkImpRoad.isChecked = ImportSettingData.Instance.isImpRoad;
 					_chkImpRail.isChecked = ImportSettingData.Instance.isImpRail;
@@ -463,6 +756,16 @@ namespace SkylinesPlateau
 					_txtAreaSize.text = ImportSettingData.Instance.areaSize;
 //					_dropZone.selectedIndex = ImportSettingData.Instance.zoneType;
 					_dropSystem.selectedIndex = ImportSettingData.Instance.isystem;
+#endif
+					_chkImpRoad.isChecked = IniFileData.Instance.isImpRoad;
+					_chkImpRail.isChecked = IniFileData.Instance.isImpRail;
+					_chkImpBuilding.isChecked = IniFileData.Instance.isImpBuilding;
+					_chkImpUniqueBuilding.isChecked = IniFileData.Instance.isImpUniqueBuilding;
+					_chkImpZone.isChecked = IniFileData.Instance.isImpZone;
+					_txtCenter.text = IniFileData.Instance.center;
+					_dropSystem.selectedIndex = IniFileData.Instance.isystem;
+					_txtFolder.text = IniFileData.Instance.inputFolderPath;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 					_initialized = true;
 				}
 			}
@@ -471,38 +774,6 @@ namespace SkylinesPlateau
 				Debug.Log((object)("ImpHighwayPanel:Update -> Exception: " + ex.Message));
 			}
 		}
-
-		/*
-		public override void OnDestroy()
-		{
-			base.OnDestroy();
-			try
-			{
-				DestroyGameObject(_dragHandle);
-				DestroyGameObject(_lblCenterTitle);
-				DestroyGameObject(_lblFitureTitle);
-				DestroyGameObject(_lblTitle);
-				DestroyGameObject(_lblUseAreaMsg);
-				DestroyGameObject(_chkImpArea);
-				DestroyGameObject(_chkImpBuilding);
-				DestroyGameObject(_chkImpRail);
-				DestroyGameObject(_chkImpRoad);
-				DestroyGameObject(_chkImpUniqueBuilding);
-				DestroyGameObject(_chkImpWaterway);
-				DestroyGameObject(_chkImpZone);
-				DestroyGameObject(_chkUseAreaSize);
-				DestroyGameObject(_btnOk);
-				DestroyGameObject(_btnCansel);
-				DestroyGameObject(_btnClose);
-				DestroyGameObject(_lblSystemTitle);
-				DestroyGameObject(_dropSystem);
-			}
-			catch (Exception ex)
-			{
-				Debug.Log((object)("[SkylinesCityGml] ImpFeaturesPanel:OnDestroy -> Exception: " + ex.Message));
-			}
-		}
-		*/
 
 		private void DestroyGameObject(UIComponent component)
 		{

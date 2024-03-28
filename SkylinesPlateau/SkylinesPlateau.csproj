@@ -30,7 +30,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -38,13 +39,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>lib\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ColossalManaged">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
+      <HintPath>lib\ColossalManaged.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICities">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
+      <HintPath>lib\ICities.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mapbox.VectorTile.ExtensionMethods">
       <HintPath>..\dll\Mapbox.VectorTile.ExtensionMethods.dll</HintPath>
@@ -64,12 +68,14 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>lib\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,10 +83,11 @@
     <Compile Include="common\SimpleNode.cs" />
     <Compile Include="GmlData\GmlDemData.cs" />
     <Compile Include="GmlData\GmlUtil.cs" />
+    <Compile Include="GUI\SettingUI.cs" />
+    <Compile Include="GUI\UIFolderDialog.cs" />
     <Compile Include="GUI\UIUtil.cs" />
     <Compile Include="GUI\ImpFeaturesPanel.cs" />
     <Compile Include="GUI\ImpMapPanel.cs" />
-    <Compile Include="GUI\ImpHighwayPanel.cs" />
     <Compile Include="ImportSettingData.cs" />
     <Compile Include="GUI\ImpGUI.cs" />
     <Compile Include="common\CommonBL.cs" />
@@ -106,11 +113,32 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\icon\folderIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\icon\folderDialog_desktop.png" />
+    <EmbeddedResource Include="res\icon\folderDialog_folder.png" />
+    <EmbeddedResource Include="res\icon\folderDialog_pc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\tbl\asset.tbl" />
+    <EmbeddedResource Include="res\tbl\bldgname.tbl" />
+    <EmbeddedResource Include="res\tbl\buildingID.tbl" />
+    <EmbeddedResource Include="res\tbl\detailedUsage.tbl" />
+    <EmbeddedResource Include="res\tbl\districtsAndZonesType.tbl" />
+    <EmbeddedResource Include="res\tbl\orgUsage.tbl" />
+    <EmbeddedResource Include="res\tbl\orgUsage2.tbl" />
+    <EmbeddedResource Include="res\tbl\SkylinesPlateau.ini" />
+    <EmbeddedResource Include="res\tbl\usage.tbl" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"
-del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\$(TargetFileName)"
-xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"</PostBuildEvent>
+    <PostBuildEvent>@rem mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"
+@rem del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\$(TargetFileName)"
+@rem xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"
+@rem xcopy /y/s/I $(SolutionDir)\dll $(TargetDir)$(SolutionName)\
+@rem xcopy /y "$(TargetPath)" $(TargetDir)$(SolutionName)\</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
