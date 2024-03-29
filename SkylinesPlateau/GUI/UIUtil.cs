@@ -1,6 +1,10 @@
 ﻿using ColossalFramework.UI;
 using System;
 using System.Collections.Generic;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+using System.IO;
+using System.Reflection;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -9,6 +13,15 @@ namespace SkylinesPlateau.common
 {
 	public class UIUtils
 	{
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+        //-------------------------------------
+        // メンバ変数
+        //-------------------------------------
+		private UITextureAtlas m_citiesPlateauAtlas;
+		private static UIUtils instance;
+		public static UIUtils Instance => instance ?? (instance = new UIUtils());
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
+
 		public static UIFont GetUIFont(string name)
 		{
 			UIFont[] array = Resources.FindObjectsOfTypeAll<UIFont>();
@@ -111,10 +124,12 @@ namespace SkylinesPlateau.common
 			UIButton uIButton = parent.AddUIComponent<UIButton>();
 			((UnityEngine.Object)uIButton).name = name;
 			uIButton.atlas = atlas;
-			uIButton.normalBgSprite = "OptionBase";
-			uIButton.hoveredBgSprite = "OptionBaseHovered";
-			uIButton.pressedBgSprite = "OptionBasePressed";
-			uIButton.disabledBgSprite = "OptionBaseDisabled";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//			uIButton.normalBgSprite = "OptionBase";
+//			uIButton.hoveredBgSprite = "OptionBaseHovered";
+//			uIButton.pressedBgSprite = "OptionBasePressed";
+//			uIButton.disabledBgSprite = "OptionBaseDisabled";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 			uIButton.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
 			uIButton.normalFgSprite = spriteName;
 			uIButton.hoveredFgSprite = spriteName;
@@ -340,5 +355,245 @@ namespace SkylinesPlateau.common
 			uIDragHandle.target = parent;
 			return uIDragHandle;
 		}
+
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+		public static UILabel GetOptionTemplate_TextLabel()
+		{
+
+			GameObject txtTmplate = UnityEngine.Object.Instantiate(UITemplateManager.GetAsGameObject("OptionsTextfieldTemplate"));
+			UIComponent txtTmplate_component = txtTmplate.GetComponent<UIComponent>();
+			return txtTmplate_component.Find<UILabel>("Label");
+		}
+		public static UITextField GetOptionTemplate_TextField()
+		{
+			GameObject txtTmplate = UnityEngine.Object.Instantiate(UITemplateManager.GetAsGameObject("OptionsTextfieldTemplate"));
+			UIComponent txtTmplate_component = txtTmplate.GetComponent<UIComponent>();
+			return txtTmplate_component.Find<UITextField>("Text Field");
+		}
+		public static UIButton CreateButton(UIComponent parent, string name, UITextureAtlas atlas, string spriteName, UIButton baseButton)
+		{
+			UIButton uIButton = parent.AddUIComponent<UIButton>();
+			((UnityEngine.Object)uIButton).name = name;
+			uIButton.atlas = atlas;
+			uIButton.font = GetUIFont(baseButton.font.name);
+			uIButton.normalBgSprite = baseButton.normalBgSprite;
+			uIButton.hoveredBgSprite = baseButton.hoveredBgSprite;
+			uIButton.pressedBgSprite = baseButton.pressedBgSprite;
+			uIButton.disabledBgSprite = baseButton.disabledBgSprite;
+			uIButton.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
+			uIButton.normalFgSprite = spriteName;
+			uIButton.hoveredFgSprite = spriteName;
+			uIButton.pressedFgSprite = spriteName;
+			uIButton.disabledFgSprite = spriteName;
+			return uIButton;
+		}
+
+		public static UILabel CreateLabel(UIComponent parent, string name, string text, UILabel baseLabel)
+		{
+			UILabel uILabel = parent.AddUIComponent<UILabel>();
+			uILabel.name = name;
+			uILabel.font = GetUIFont(baseLabel.font.name);
+			uILabel.font.size = baseLabel.font.size;
+			uILabel.text = text;
+			uILabel.autoSize = baseLabel.autoSize;
+			uILabel.verticalAlignment = baseLabel.verticalAlignment;
+			return uILabel;
+		}
+
+		public static UITextField CreateTextField(UIComponent parent, string name, string text, UITextField baseTextField)
+		{
+			UITextField uITextField = parent.AddUIComponent<UITextField>();
+			((UnityEngine.Object)uITextField).name = name;
+			uITextField.atlas = baseTextField.atlas;
+			uITextField.font = GetUIFont(baseTextField.font.name);
+			uITextField.font.size = baseTextField.font.size;
+			uITextField.textScale = baseTextField.textScale;
+			uITextField.color = baseTextField.color;
+			uITextField.normalBgSprite = baseTextField.normalBgSprite;
+			uITextField.hoveredBgSprite = baseTextField.hoveredBgSprite;
+			uITextField.focusedBgSprite = baseTextField.focusedBgSprite;
+			uITextField.disabledBgSprite = baseTextField.disabledBgSprite;
+			uITextField.selectionSprite = baseTextField.selectionSprite;
+			uITextField.foregroundSpriteMode = baseTextField.foregroundSpriteMode;
+			uITextField.horizontalAlignment = baseTextField.horizontalAlignment;
+			uITextField.verticalAlignment = baseTextField.verticalAlignment;
+			uITextField.padding = baseTextField.padding;
+			uITextField.builtinKeyNavigation = baseTextField.builtinKeyNavigation;
+			uITextField.bottomColor = baseTextField.bottomColor;
+			uITextField.characterSpacing = baseTextField.characterSpacing;
+			uITextField.processMarkup = baseTextField.processMarkup;
+			uITextField.colorizeSprites = baseTextField.colorizeSprites;
+			uITextField.textColor = baseTextField.textColor;
+			uITextField.disabledTextColor = baseTextField.disabledTextColor;
+			uITextField.useGradient = baseTextField.useGradient;
+			uITextField.useOutline = baseTextField.useOutline;
+			uITextField.outlineSize = baseTextField.outlineSize;
+			uITextField.outlineColor = baseTextField.outlineColor;
+			uITextField.useDropShadow = baseTextField.useDropShadow;
+			uITextField.dropShadowColor = baseTextField.dropShadowColor;
+			uITextField.dropShadowOffset = baseTextField.dropShadowOffset;
+			uITextField.selectionBackgroundColor = baseTextField.selectionBackgroundColor;
+			uITextField.selectionSprite = baseTextField.selectionSprite;
+			uITextField.text = text;
+			return uITextField;
+		}
+
+		public static void AddTexturesInAtlas(UITextureAtlas atlas, Texture2D[] newTextures, bool locked = false)
+		{
+			Texture2D[] array = new Texture2D[atlas.count + newTextures.Length];
+			for (int i = 0; i < atlas.count; i++)
+			{
+				Texture2D val = atlas.sprites[i].texture;
+				if (locked)
+				{
+					RenderTexture temporary = RenderTexture.GetTemporary(((Texture)val).width, ((Texture)val).height, 0);
+					Graphics.Blit((Texture)val, temporary);
+					RenderTexture active = RenderTexture.active;
+					val = new Texture2D(((Texture)temporary).width, ((Texture)temporary).height);
+					RenderTexture.active = (temporary);
+					val.ReadPixels(new Rect(0f, 0f, (float)((Texture)temporary).width, (float)((Texture)temporary).height), 0, 0);
+					val.Apply();
+					RenderTexture.active = (active);
+					RenderTexture.ReleaseTemporary(temporary);
+				}
+				array[i] = val;
+				array[i].name = atlas.sprites[i].name;
+			}
+			for (int j = 0; j < newTextures.Length; j++)
+			{
+				array[atlas.count + j] = newTextures[j];
+			}
+			Rect[] array2 = atlas.texture.PackTextures(array, atlas.padding, 4096, false);
+			atlas.sprites.Clear();
+			for (int k = 0; k < array.Length; k++)
+			{
+				UITextureAtlas.SpriteInfo spriteInfo = atlas[(array[k]).name];
+				atlas.sprites.Add(new UITextureAtlas.SpriteInfo
+				{
+					texture = array[k],
+					name = array[k].name,
+					border = (RectOffset)((spriteInfo != null) ? spriteInfo.border : (new RectOffset())),
+					region = array2[k]
+				});
+			}
+			atlas.RebuildIndexes();
+		}
+		public static UITextureAtlas GetAtlas(string name)
+		{
+			UITextureAtlas[] array = Resources.FindObjectsOfTypeAll(typeof(UITextureAtlas)) as UITextureAtlas[];
+			for (int i = 0; i < array.Length; i++)
+			{
+				if (array[i].name == name)
+				{
+					return array[i];
+				}
+			}
+			return UIView.GetAView().defaultAtlas;
+		}
+
+		public UIButton CreateImageButton(UIComponent parent, string name, string iconName)
+		{
+			if (m_citiesPlateauAtlas == null)
+			{
+				m_citiesPlateauAtlas = LoadResources();
+			}
+			UIButton rtnButton = UIUtils.CreateButton(parent, name, m_citiesPlateauAtlas, iconName);
+			rtnButton.tooltip = "";
+
+			return rtnButton;
+		}
+
+		private UITextureAtlas LoadResources()
+		{
+			try
+			{
+				UITextureAtlas rtnAtlas;
+				string[] spriteNames = new string[4]
+				{
+						"folderIcon",
+						"folderDialog_desktop",
+						"folderDialog_pc",
+						"folderDialog_folder"
+				};
+				rtnAtlas = CreateTextureAtlas("SkylinesPlateauAtlas", spriteNames, "SkylinesPlateau.res.icon.");
+				UITextureAtlas atlas = GetAtlas("Ingame");
+				Texture2D[] newTextures = (Texture2D[])new Texture2D[5]
+				{
+						atlas["OptionBase"].texture,
+						atlas["OptionBaseFocused"].texture,
+						atlas["OptionBaseHovered"].texture,
+						atlas["OptionBasePressed"].texture,
+						atlas["OptionBaseDisabled"].texture
+				};
+				AddTexturesInAtlas(rtnAtlas, newTextures);
+				return rtnAtlas;
+			}
+			catch (Exception exception)
+			{
+				Debug.Log("LoadResources Exception Error : " + exception);
+				Debug.Log("LoadResources Exception Error : " + exception.Message);
+				Debug.Log("LoadResources Exception Error : " + exception.StackTrace);
+				return null;
+			}
+		}
+		private UITextureAtlas CreateTextureAtlas(string atlasName, string[] spriteNames, string assemblyPath)
+		{
+			int num = 1024;
+			Texture2D val = new Texture2D(1, 1, (TextureFormat)5, false);
+			Texture2D[] array = new Texture2D[spriteNames.Length];
+			Rect[] array2 = new Rect[spriteNames.Length];
+			for (int i = 0; i < spriteNames.Length; i++)
+			{
+				array[i] = LoadTextureFromAssembly(assemblyPath + spriteNames[i] + ".png");
+			}
+			array2 = val.PackTextures(array, 2, num);
+			UITextureAtlas uITextureAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
+			Material val2 = UnityEngine.Object.Instantiate<Material>(UIView.GetAView().defaultAtlas.material);
+			val2.mainTexture = val;
+			uITextureAtlas.material = val2;
+			(uITextureAtlas).name = atlasName;
+			for (int j = 0; j < spriteNames.Length; j++)
+			{
+				UITextureAtlas.SpriteInfo item = new UITextureAtlas.SpriteInfo
+				{
+					name = spriteNames[j],
+					texture = array[j],
+					region = array2[j]
+				};
+				uITextureAtlas.AddSprite(item);
+			}
+			return uITextureAtlas;
+		}
+		private Texture2D LoadTextureFromAssembly(string path)
+		{
+			try
+			{
+				Assembly executingAssembly = Assembly.GetExecutingAssembly();
+				using (Stream textureStream = executingAssembly.GetManifestResourceStream(path))
+				{
+					return LoadTextureFromStream(textureStream);
+				}
+			}
+			catch (Exception exception)
+			{
+				Debug.Log("LoadTextureFromAssembly Exception Error : " + exception);
+				Debug.Log("LoadTextureFromAssembly Exception Error : " + exception.Message);
+				Debug.Log("LoadTextureFromAssembly Exception Error : " + exception.StackTrace);
+				return null;
+			}
+		}
+		private Texture2D LoadTextureFromStream(Stream textureStream)
+		{
+			byte[] array = new byte[textureStream.Length];
+			textureStream.Read(array, 0, array.Length);
+			textureStream.Close();
+			Texture2D texture2D = new Texture2D(36, 36, TextureFormat.ARGB32, mipmap: true)
+			{
+				filterMode = FilterMode.Trilinear
+			};
+			texture2D.LoadImage(array);
+			return texture2D;
+		}
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 	}
 }

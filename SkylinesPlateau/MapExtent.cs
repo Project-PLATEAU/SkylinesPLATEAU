@@ -268,7 +268,10 @@ namespace SkylinesPlateau
             // 設定ファイルの読み込み
             //------------------------------------
             double lat = 0.0, lon = 0.0;
-            string[] splitStr = ImportSettingData.Instance.center.Split(',');
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//            string[] splitStr = ImportSettingData.Instance.center.Split(',');
+            string[] splitStr = IniFileData.Instance.center.Split(',');
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
             if (splitStr.Length > 1)
             {
                 lat = double.Parse(splitStr[0]);
@@ -294,7 +297,10 @@ namespace SkylinesPlateau
             // 設定ファイルの読み込み
             //------------------------------------
             double lat = 0.0, lon = 0.0;
-            string[] splitStr = ImportSettingData.Instance.center.Split(',');
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+//            string[] splitStr = ImportSettingData.Instance.center.Split(',');
+            string[] splitStr = IniFileData.Instance.center.Split(',');
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
             if (splitStr.Length > 1)
             {
                 lat = double.Parse(splitStr[0]);
@@ -307,6 +313,8 @@ namespace SkylinesPlateau
 
             double dist;
             // 距離が有効
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+#if false
             if (ImportSettingData.Instance.isUseAreaSize)
             {
                 // km単位で格納されているため1000倍する
@@ -314,6 +322,15 @@ namespace SkylinesPlateau
                 // 直径から半径に変換
                 dist = dist / 2;
             }
+#endif
+            if (IniFileData.Instance.isUseAreaSize)
+            {
+                // km単位で格納されているため1000倍する
+                dist = double.Parse(IniFileData.Instance.areaSize) * 1000.0;
+                // 直径から半径に変換
+                dist = dist / 2;
+            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
             else
             {
                 // 全域を対象とする

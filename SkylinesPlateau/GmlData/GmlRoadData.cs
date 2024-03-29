@@ -271,7 +271,9 @@ namespace SkylinesPlateau
         //-------------------------------------
         // 固定値
         //-------------------------------------
-        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
         public const string INPUT_PATH2 = @"/udx/tran";
 
         //-------------------------------------
@@ -1073,7 +1075,9 @@ namespace SkylinesPlateau
         {
             // 読み込みデータを保持
             List<GmlRoadData> dataList = new List<GmlRoadData>();
-
+            
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+/*
             //-------------------------------------
             // フォルダの存在チェック
             //-------------------------------------
@@ -1095,6 +1099,24 @@ namespace SkylinesPlateau
                     Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
                     continue;
                 }
+*/
+            //-------------------------------------
+            // フォルダの存在チェック
+            //-------------------------------------
+            if (!Directory.Exists(IniFileData.Instance.inputFolderPath))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + IniFileData.Instance.inputFolderPath);
+                return dataList;
+            }
+            DirectoryInfo dir = new DirectoryInfo(IniFileData.Instance.inputFolderPath);
+            if (!Directory.Exists(dir.FullName + INPUT_PATH2))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
+                return dataList;
+            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 
                 //-------------------------------------
                 // フォルダ内のXMLファイルを取得
@@ -1297,7 +1319,9 @@ namespace SkylinesPlateau
                         Logger.Log("xmlファイルの解析に失敗しました。：" + ex.Message);
                     }
                 }
-            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 
             Logger.Log("読み込み道路のデータ数：" + dataList.Count);
 
@@ -1711,6 +1735,41 @@ namespace SkylinesPlateau
                         Logger.Log("[T]ライン全体の長さ：" + lineDist);
                     }
                 }
+// 2022.11.18 G.Arakawa [道路の頂点数が少ない場合、道路描画が不正となる不具合対応] ADD_START
+                else
+                {
+                    if (IniFileData.Instance.logOut)
+                    {
+                        Logger.Log("頂点補完");
+                    }
+                    // 道路の２点間が100m以上ある場合、100m地点に頂点追加する
+                    double checkDist = 100 * MapExtent.Instance.areaScaleX; // 100mを地図上のスケールにに合わせる
+                    // 頂点数分ループ処理
+                    for (int i = 0; i < segment.points.Count - 1; i++)
+                    {
+                        Vector2 stPoint = segment.points[i];
+                        Vector2 edPoint = segment.points[i + 1];
+                        double dist = CommonFunc.Dist2Point(stPoint, edPoint);
+
+                        if (dist > checkDist)
+                        {
+                            if (IniFileData.Instance.logOut)
+                            {
+                                Logger.Log("　距離長い　　：" + dist);
+                            }
+                            Vector3 newVec = CommonFunc.GetLinePos(stPoint, edPoint, checkDist);
+                            segment.points.Insert(i + 1, newVec);
+                        }
+                        else
+                        {
+                            if (IniFileData.Instance.logOut)
+                            {
+                                Logger.Log("　距離短い　　：" + dist);
+                            }
+                        }
+                    }
+                }
+// 2022.11.18 G.Arakawa [道路の頂点数が少ない場合、道路描画が不正となる不具合対応] ADD_END
 
                 // 頂点数分ループ処理
                 for (int i = 0; i < segment.points.Count - 1; i++)

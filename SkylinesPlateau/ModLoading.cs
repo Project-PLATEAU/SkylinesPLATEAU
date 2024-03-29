@@ -18,7 +18,9 @@ namespace SkylinesPlateau
     {
         private GameObject _objImpGui = null;
         private GameObject _objImpMapPanel = null;
-        private GameObject _objImpHighwayPanel = null;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//        private GameObject _objImpHighwayPanel = null;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
         private GameObject _objImpFeaturesPanel = null;
 
         // called when level loading begins
@@ -38,12 +40,16 @@ namespace SkylinesPlateau
                     _objImpMapPanel.transform.parent = uiView.transform;
                     _objImpMapPanel.AddComponent<ImpMapPanel>();
                 }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+/*
                 if (_objImpHighwayPanel == null)
                 {
                     _objImpHighwayPanel = (GameObject)(object)new GameObject("ImpHighwayPanel");
                     _objImpHighwayPanel.transform.parent = uiView.transform;
                     _objImpHighwayPanel.AddComponent<ImpHighwayPanel>();
                 }
+*/
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
                 if (_objImpFeaturesPanel == null)
                 {
                     _objImpFeaturesPanel = (GameObject)(object)new GameObject("ImpFeaturesPanel");

@@ -19,12 +19,16 @@ namespace SkylinesPlateau
         //-------------------------------------
         // 固定値
         //-------------------------------------
-        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//        public const string INPUT_PATH = @"Files/SkylinesPlateau/in";
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
         public const string INPUT_PATH2 = @"/udx/luse";
         // 読み込み対象の区分
-        //河川のコード番号変更に対応するよう編集
-        public static int KASEN_LANDUSE = (int)IniFileData.Instance.waterAreaInt;
-        //public const int KASEN_LANDUSE = 5;
+        public const int KASEN_LANDUSE = 5;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+        // 読み込み対象の区分
+        public const int KASEN_LANDUSETYPE = 204;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 
         //-------------------------------------
         // メンバ変数
@@ -33,6 +37,10 @@ namespace SkylinesPlateau
         public string name;
         // 土地利用用途の区分
         public int landUse;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+        // 土地利用用途の区分
+        public int landUseType;
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
         // 形状ポリゴン
         public List<Vector3> points = new List<Vector3>();
         // 道路ポリゴンの範囲
@@ -75,7 +83,9 @@ namespace SkylinesPlateau
         {
             // 読み込みデータを保持
             List<GmlWaterwayData> dataList = new List<GmlWaterwayData>();
-
+            
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_START
+/*
             //-------------------------------------
             // フォルダの存在チェック
             //-------------------------------------
@@ -97,6 +107,26 @@ namespace SkylinesPlateau
                     Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
                     continue;
                 }
+*/
+
+            //-------------------------------------
+            // フォルダの存在チェック
+            //-------------------------------------
+            if (!Directory.Exists(IniFileData.Instance.inputFolderPath))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + IniFileData.Instance.inputFolderPath);
+                return dataList;
+            }
+
+            DirectoryInfo dir = new DirectoryInfo(IniFileData.Instance.inputFolderPath);
+            if (!Directory.Exists(dir.FullName + INPUT_PATH2))
+            {
+                // ファイルなし
+                Logger.Log("フォルダがありません：" + dir.FullName + INPUT_PATH2);
+                return dataList;
+            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] UPD_END
 
                 //-------------------------------------
                 // フォルダ内のXMLファイルを取得
@@ -128,13 +158,24 @@ namespace SkylinesPlateau
                             //-------------------------------------------------
                             // 識別する名称
                             gml.GetTagData(nav, "luse:LandUse/@gml:id", out gmldata.name);
+                            
                             // 土地利用用途の区分
                             gml.GetTagData(nav, "luse:LandUse/uro:landUseDetailAttribute/uro:LandUseDetailAttribute/uro:orgLandUse", out gmldata.landUse);
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//                            if (gmldata.landUse != KASEN_LANDUSE)
+//                            {
+//                                continue;
+//                            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 
-                            if (gmldata.landUse != KASEN_LANDUSE)
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+                            // 土地利用用途の区分
+                            gml.GetTagData(nav, "luse:LandUse/luse:class", out gmldata.landUseType);
+                            if (gmldata.landUseType != KASEN_LANDUSETYPE)
                             {
                                 continue;
                             }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
 
                             // 形状ポリゴン
                             XPathNodeIterator nodeList2 = gml.GetXmlNodeList(nav, "luse:LandUse/luse:lod1MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList");
@@ -223,6 +264,9 @@ namespace SkylinesPlateau
                                 {
                                     Logger.Log("名称　　        : " + gmldata.name);
                                     Logger.Log("区分            : " + gmldata.landUse);
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_START
+                                    Logger.Log("区分(TYPE)      : " + gmldata.landUseType);
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] ADD_END
                                     Logger.Log("形状ポリゴン    : ", gmldata.points);
                                     foreach (InteriorPoints pos in gmldata.interiorList)
                                     {
@@ -243,7 +287,9 @@ namespace SkylinesPlateau
                         Logger.Log("xmlファイルの解析に失敗しました。：" + ex.Message);
                     }
                 }
-            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_START
+//            }
+// 2023.08.18 G.Arakawa@cmind [2023年度の改修対応] DEL_END
 
             Logger.Log("読み込み河川のデータ数：" + dataList.Count);
 
