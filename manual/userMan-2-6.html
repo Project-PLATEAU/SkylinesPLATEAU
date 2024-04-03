@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title> </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content=" ">
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../resources/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<h2 id="6-マップデータ作成">6. マップデータ作成</h2>
+<hr>
+<p>ゲーム開始時に必要となる地形、高速道路、水源を設定したマップデータの作成を行ってください。（以下では、座標値等はサンプルファイルを例としたものです。）</p>
+<h3 id="61-新規マップ作成">6.1 新規マップ作成</h3>
+<p>マップエディタで使用する新規マップの作成を行います。</p>
+<p>① メインメニューで「ツール」をクリックします。</p>
+<p>② 「ツール選択」でマップエディタ欄の「新規」ボタンをクリックします。</p>
+<p>③ 「新規マップ」ウィンドウのテーマを選択欄で「温帯」を選択し、「左側通行」ボタンをクリックしてオン（青色に点灯）の状態として「作成」ボタンをクリックします。</p>
+<p><br><img src="../resources/userMan/3-1-1-1.png" style="zoom: 25%;"></p>
+<p><br><br></p>
+<h3 id="62-地形高速道路の読込み">6.2 地形・高速道路の読込み</h3>
+<p>SkylinesPLATEAUの「地形、高速道路読込」機能を使用して、地形と高速道路の読込みを行います。</p>
+<p>① マップエディタ上の「地形、高速道路読込」ボタンをクリックし、ダイアログを起動します。</p>
+<p>② 読込みを行う地物（地形・高速道路）を選択します。オプション画面で入力した設定値を確認し、インポートボタンを選択します。</p>
+<p><br><img src="../resources/userMan/3-1-2-1.png" style="zoom: 23%;"></p>
+<p><br><br></p>
+<p>注意点</p>
+<ul>
+<li>データがない部分は標高0ｍとなります。</li>
+<li>高速道路が存在しないエリアの場合は、「細部の調整」の項に従って、高速道路の敷設を行ってください。</li>
+</ul>
+<p><br><img src="../resources/userMan/3-1-2-2.png" style="width:500px"></p>
+<p><br><br></p>
+<h3 id="63-海水面の設定">6.3 海水面の設定</h3>
+<p>Cities: Skylinesの基本機能である「水」ツールを使用して、海水面の設定を行ってください。</p>
+<p>① マップエディタ画面下部の「水」ツールボタンをクリックし、上部に表示される「海水面を変更」をクリックします。</p>
+<p>② 「海水面」設定ウィンドウで 「海水面高さ」に「0（m）」を入力し、「再開」ボタン又は「時間の速さ」ボタンをクリックして時間を進めます。</p>
+<p>③ その後すぐに、「海水面高さ」に「40（m）」（※1）程度の数値を入力し、「水位を海水面に戻す」ボタンをクリックします。 （この操作により、水位が安定するまでの時間を大幅に短縮することができます。）</p>
+<p><br><img src="../resources/userMan/3-1-3-1-1.png" style="width:500px"><br><br></p>
+<p>④ 水位が安定したら「水」ツールボタンをクリックして「水」ツールを終了し、「一時停止」ボタンをクリックして時間の進行を止めます。</p>
+<p>※1 Cities: Skylinesの水位のデフォルト値である40ｍに適合するようSkylinesPLATEAUでは地形読込の際に標高の補正を行っています。</p>
+<p><br><img src="../resources/userMan/3-1-3-1-2.png" style="width:500px"><br><br></p>
+<p><br><br></p>
+<h3 id="64-細部の調整">6.4 細部の調整</h3>
+<p>マップデータをゲームで使用する場合は、以下の必須事項が定められています。</p>
+<ul>
+<li>開始タイルに河川（水源）がある。</li>
+<li>最低一つの地域内へ向かう高速道路がつながっている。</li>
+<li>最低一つの地域外へ向かう高速道路がつながっている。</li>
+</ul>
+<p><img src="../resources/userMan/3-1-4-1.png" style="zoom: 30%;"><br></p>
+<br>
+<p>このため、上記の必須事項をクリアするための操作を含めた細部の調整を行ってください。</p>
+<p>6.4.1 高速道路を敷設（3D都市モデルの範囲に高速道路が存在しない場合のみ）</p>
+<p>6.4.2 高速道路の地域外エリアとの接続</p>
+<p>6.4.3 水際等の地形の調整</p>
+<br>
+<h4 id="641-高速道路の敷設3d都市モデルの範囲に高速道路が存在しない場合のみ">6.4.1 高速道路の敷設（3D都市モデルの範囲に高速道路が存在しない場合のみ）</h4>
+<p>①「道路」ツールボタンをクリックしてツールを起動します。</p>
+<p>② 上部に表示されるウィンドウから任意の高速道路を選択します。</p>
+<p>③ 「直線敷設」又は「曲線敷設」を選択します。</p>
+<p><br><img src="../resources/userMan/3-1-4-1-1.png" style="zoom: 27%;"></p>
+<p><br><br></p>
+<p>④ 高速道路の始点となる位置をクリックします。</p>
+<p>⑤ 高速道路の終点となる位置をクリックします。</p>
+<p>⑥ ④と⑤の操作を繰り返して必要な箇所に高速道路を敷設します。</p>
+<p><br><img src="../resources/userMan/3-1-4-1-2.png" style="zoom: 26%;"></p>
+<p><br><br></p>
+<h4 id="642-高速道路の地域外エリアとの接続">6.4.2 高速道路の地域外エリアとの接続</h4>
+<p>①「道路」ツールボタンをクリックしてツールを起動します。</p>
+<p>② 上部に表示されるウィンドウから「ランプ」を選択します。</p>
+<p>③ 「直線敷設」又は「曲線敷設」を選択します。</p>
+<p>④ 高速道路の終点をクリックした後、地域外の点をクリックして、地域外に向かう高速道路を敷設します。</p>
+<p>⑤ ④の手順とは逆に、地域外をクリックした後、高速道路の終点をクリックして、地域内に向かう高速道路を敷設します。</p>
+<p><br><img src="../resources/userMan/3-1-4-1-3.png" style="zoom: 24%;"></p>
+<p><br><br></p>
+<h4 id="643-水際等の地形の調整">6.4.3 水際等の地形の調整</h4>
+<p>① 「地形」ツールボタンをクリックしてツールを起動します。</p>
+<p>② 上部に表示されるウィンドウから操作方法を選択します。
+（マウスカーソルを合わせることで詳しい操作方法、内容が表示されます。）</p>
+<p><br><img src="../resources/userMan/3-1-4-2-1.png" style="zoom: 33%;"></p>
+<p><br><br></p>
+<p>③ 画面左側のブラシ設定ウィンドウでブラシの硬さを設定します。値は「0.01」程度を目安に設定します。</p>
+<p>④ 変更したい部分をクリック又はドラッグして、地形の高さの調整を行います。</p>
+<p><br><img src="../resources/userMan/3-1-4-2-2.png" style="zoom: 28%;"></p>
+<br>
+<br>
+<h3 id="65-マップデータの保存">6.5 マップデータの保存</h3>
+<p>前項までの作業を行ったデータをマップデータとして保存し、ゲーム開始時に選択可能な状態としてください。</p>
+<p>① 画面右上の「メニュー」ボタンをクリックして「ポーズ」ウィンドウを表示します。</p>
+<p>② 「ポーズ」ウィンドウで「マップをセーブ」ボタンをクリックします。</p>
+<p>③ 「マップをセーブ」ウィンドウでファイル名、マップ名を入力し、「新規ゲームパネルへマップを追加」を有効化した後、「セーブ」ボタンをクリックします。 （ファイル名とマップ名は同一のものにすることを推奨します。）</p>
+<p>④ 「ポーズ」ウィンドウで「終了」をクリックし、「ゲームを終了」ウィンドウで「メインメニューへ」をクリックします。
+<br><img src="../resources/userMan/3-1-5-1.png" style="zoom: 23.7%;"></p>
+<p><br><br></p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

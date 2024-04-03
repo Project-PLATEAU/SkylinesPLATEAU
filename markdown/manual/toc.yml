@@ -1,0 +1,57 @@
+- name: 'Cities: Skylines PLATEAU Mod'
+  href: ../index.md
+
+
+#- name: 利用を開始する
+# items:
+#  - name: 環境構築手順書
+#    href: devMan.md
+
+
+- name: 'Cities: Skylinesおよび本Modのインストール'
+  items:
+  - name: '1. Cities: Skylinesのインストール'
+    href: userMan-1-1.md
+  - name: 2. SkylinesPLATEAUの導入
+    href: userMan-1-2.md
+#  - name: 3. 中心座標の確認
+#    href: userMan-1-3.md
+
+- name: 3D都市モデルのインポート
+  items:
+  - name: 1. 利用できる3D都市モデル
+    href: userMan-2-1.md
+
+  - name: 2. 3D都市モデルのダウンロード
+    href: userMan-2-2.md
+
+  - name: 3. 中心座標の確認
+    href: userMan-2-3.md
+
+  - name: '4. Cities: Skylinesの起動と設定'
+    href: userMan-2-4.md
+
+  - name: 5. 3D都市モデル読み込み時の各種設定
+    href: userMan-2-5.md
+
+  - name: 6. マップデータ作成
+    href: userMan-2-6.md
+
+  - name: 7. 新規ゲームの開始、インフラ施設配置
+    href: userMan-2-7.md
+
+  - name: 8. 地物の読込み
+    href: userMan-2-8.md
+
+  - name: 9. 細部調整
+    href: userMan-2-9.md
+    
+  - name: 10. ゲームの保存
+    href: userMan-2-10.md
+
+
+- name: オプション
+# href: userMan-3-0.md
+  items:
+  - name: 本Modのビルド方法
+    href: userMan-3-0.md
